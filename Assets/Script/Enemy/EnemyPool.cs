@@ -120,7 +120,7 @@ namespace SpawnerSystem
                     var enemy = Instantiate(data.Prefab, objParent.transform);
                     enemy.SetActive(false);
                     var controller = enemy.GetComponentInChildren<EnemyController>();
-                    //enemy.name = enemy.name.Replace("(Clone)", "").Trim();
+                    enemy.name = enemy.name.Replace("(Clone)", "").Trim();
                     controller.OnEnemyDeath
                         .Subscribe(_ =>
                         {

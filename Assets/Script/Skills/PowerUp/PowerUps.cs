@@ -12,11 +12,14 @@ public abstract class PowerUps : ScriptableObject
 {
     [SerializeField] Sprite icon;
     [SerializeField] PowerUpType type;
+
+
     public PowerUpType Type => type;
+    public Sprite Icon => icon;
     [TextAreaAttribute]
     public string Description;
 
-    public virtual void ApplyPowerUp(CharacterData characterData)
+    public virtual void Apply(CharacterData characterData)
     {
 
     }

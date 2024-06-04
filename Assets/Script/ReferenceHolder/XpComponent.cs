@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class XpComponent : MonoBehaviour
 {
-    [SerializeField] FloatVariable xp;
+    [SerializeField] FloatReactiveVariable xp;
 
     public void IncreaseXP(float value)
     {

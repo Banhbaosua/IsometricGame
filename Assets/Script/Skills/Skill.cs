@@ -12,6 +12,8 @@ public abstract class Skill : MonoBehaviour
     private float damage;
     private float castFreq;
 
+    public SkillData SkillData => skillData;
+
     public float SkillCoolDown 
     { 
         get => coolDown;

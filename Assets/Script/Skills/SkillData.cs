@@ -20,6 +20,7 @@ public class SkillData : ScriptableObject
     public float BaseCoolDown => baseCoolDown;
     public float BaseDamage => baseDamage;
     public float CastFreq => castFreq;
+    public Sprite Icon => icon;
 }
 
 public static class ModifyValueExtension

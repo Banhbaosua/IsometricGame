@@ -9,24 +9,44 @@ public class SkillCard : MonoBehaviour
 {
     [SerializeField] Button button;
     [SerializeField] CharacterData characterData;
-    private PowerUps powerUp;
-    public PowerUps PowerUps => powerUp;
-    private Subject<PowerUps> onPUSelected;
-    public IObservable<PowerUps> OnPUSelected => onPUSelected;
+    [SerializeField] Sprite common;
+    [SerializeField] Sprite uncommon;
+    [SerializeField] Sprite rare;
+    [SerializeField] Sprite epic;
+    [SerializeField] Sprite legendary;
+    [SerializeField] SkillInventory skillInventory;
+    [SerializeField] Sprite cardIcon;
+    [TextAreaAttribute]
+    public string Description;
 
-    public void SetPowerUp(PowerUps newPU)
+    private PowerUps powerUp;
+    private Skill skill;
+    public PowerUps PowerUps => powerUp;
+
+    public void Choose()
     {
-        powerUp = newPU;
+        powerUp.Apply(characterData);
     }
 
-    public void ChoosePowerUp()
+    public void Set(PowerUps pu = null, Skill skill = null)
     {
-        powerUp.ApplyPowerUp(characterData);
+        if(pu != null)
+        {
+            powerUp = pu;
+            cardIcon = pu.Icon;
+            Description = pu.Description;
+        }
+        if(skill != null)
+        {
+            this.skill = skill;
+            cardIcon = skill.SkillData.Icon;
+        }
     }
     // Start is called before the first frame update
     private void Awake()
     {
-        button.OnClickAsObservable().Subscribe(_ => ChoosePowerUp());
+        button.OnClickAsObservable().Subscribe(_ => Choose());
+        
     }
 
     // Update is called once per frame
