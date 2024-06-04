@@ -1,0 +1,622 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1402812997410228
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4940590545929009}
+  - component: {fileID: 114301875700542580}
+  - component: {fileID: 114641553974755905}
+  - component: {fileID: 114046061887745477}
+  - component: {fileID: 114603620914066747}
+  - component: {fileID: 114357614444706453}
+  - component: {fileID: 114483787316941790}
+  - component: {fileID: 114229340956889988}
+  m_Layer: 10
+  m_Name: FlameWave-Skill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4940590545929009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402812997410228}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4889789421355505}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &114301875700542580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402812997410228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2720e058a51da3ac750bfd30f1e448d, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  SkillName: FlameWave
+  SkillType: 12714000
+  SkillKeywords: 0
+  IgnoreGlobalCooldown: 0
+  IgnoreMulticast: 0
+  StartingCooldown: 0
+  Cooldown: 4
+  HasMinCooldownOverride: 0
+  MinCooldownOverride: 0
+  IgnoreTemporaryCooldownReductionFromThisSkill: 0
+  CancelAfterCasting: 1
+  AICanRotateWhileCasting: 0
+  RangeTrait: {fileID: 0}
+  RadiusTrait: {fileID: 0}
+  PriorityTrait: {fileID: 0}
+  BusyTrait: {fileID: 0}
+  ChargingTrait: {fileID: 0}
+  ActivationRequirements:
+    RequiresTargetGroundPosition: 0
+    RequiresTargetPosition: 0
+    RequiresTargetDirection: 0
+    RequiresTargetTransform: 0
+    RequiresChannelingFunc: 0
+    RequiresFrontPositionFunc: 0
+    RequiresFrontPositionGroundFunc: 0
+    RequiresPositionInFrontOfCaster: 0
+    DistanceInFrontOfCaster: 0
+  Modifiers: {fileID: 114229340956889988}
+  UseDeltaTimeEffects: 0
+  IgnorePassiveSkills: 0
+  DeltaTimeCooldownForPassiveSkills: 1
+  SurvivorsData: {fileID: 114483787316941790}
+  NextSkillInSequence: {fileID: 0}
+  HasMandatoryEnvironmentTarget: 0
+  MandatoryEnvironmentTargetId:
+  Effects:
+  - {fileID: 114641553974755905}
+  - {fileID: 114046061887745477}
+  - {fileID: 114603620914066747}
+  - {fileID: 114357614444706453}
+  EffectsIfBehind: []
+  EffectsIfFront: []
+  PositionalEffects: []
+  Variants:
+  - {fileID: 114669495562215793}
+  SubProjectileEmitterTrait: {fileID: 0}
+  CurrentVariant: {fileID: 0}
+--- !u!114 &114641553974755905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402812997410228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa39fda15d499b067b30cdc6becb141, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  TargetFilter:
+    TargetSelf: 0
+    TargetAllegiance: 2
+  Skill: {fileID: 0}
+  CountAsTargetHit: 0
+  Force: 2000
+  ExplosionRadius: 8
+  UpwardsModifier: 2
+  ForceMode: 1
+  OverrideReferenceTransform: {fileID: 0}
+--- !u!114 &114046061887745477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402812997410228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd21f7875a795d5988afdab5f591c757, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  TargetFilter:
+    TargetSelf: 0
+    TargetAllegiance: 2
+  Skill: {fileID: 0}
+  CountAsTargetHit: 1
+  HealthChange: -300
+  RandomHealthChange: {x: 0, y: 0}
+  CurrentHealthPercentChange: 0
+  MaxHealthPercentChange: 0
+  DeltaTimeCooldown: 0
+  ExtraMultiplierOnCrits: 0
+  ExtraMultiplierPerSummonedEntity: 0
+  IgnoreDefenses: 0
+  ExtraStatsForScaling:
+    MaxHealth: 0
+    CritChance: 0
+    CritPotency: 0
+    PushbackCritChance: 0
+    PushbackCritPotency: 0
+    PushbackForceModifier: 0
+    PushbackResistance: 0
+    Mass: 0
+    DamageModifier: 0
+    HealingModifier: 0
+    ArmorModifier: 0
+    DamageReduction: 0
+    AttackSpeed: 0
+    BlockChance: 0
+    MovementSpeedModifier: 0
+    JumpCount: 0
+    DashCount: 0
+    ExperienceModifier: 0
+    CollectRange: 0
+    CurrencyModifier: 0
+    EndOfWorldDamageModifier: 0
+    EndOfWorldRegenerationModifier: 0
+    HealthOnLevelUp: 0
+    AreaModifier: 0
+    BaseSkillCooldowns: 0
+    ExtraCastModifier: 0
+    StealthLevel: 0
+    PassiveHealthRegeneration: 0
+  ScaleWithTags: 0
+  ExtraScalingPerTag: 0
+  ScaleWithNegativeEffects: 0
+  ExtraScalingPerNegativeEffect: 0
+  ApplyEffectDeltaTimeCooldown: 0
+--- !u!114 &114603620914066747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402812997410228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0a82680523ac51e6c940b49a8db43ed, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  TargetFilter:
+    TargetSelf: 0
+    TargetAllegiance: 2
+  Skill: {fileID: 0}
+  CountAsTargetHit: 0
+  ApplyData:
+    BurnApplyData:
+      StacksToApply: 2
+      TotalDamage: -200
+    MeltingApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    SlowApplyData:
+      StacksToApply: 0
+    ParalysisApplyData:
+      StacksToApply: 0
+    BleedApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    HemorrhageApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    DoomApplyData:
+      StacksToApply: 0
+      HealthChange: 0
+    CursedApplyData:
+      StacksToApply: 0
+      HealthChange: 0
+    FragilityApplyData:
+      StacksToApply: 0
+    weaknessApplyData:
+      StacksToApply: 0
+    PoisonApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    RotApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    DazedApplyData:
+      StacksToApply: 0
+    DisorientedApplyData:
+      StacksToApply: 0
+    ExposedApplyData:
+      StacksToApply: 0
+    VulnerableApplyData:
+      StacksToApply: 0
+    DistractedApplyData:
+      StacksToApply: 0
+    ConfusedApplyData:
+      StacksToApply: 0
+      DamageToTake: 0
+    StiffApplyData:
+      StacksToApply: 0
+    BrittleApplyData:
+      StacksToApply: 0
+      ExtraDamageToTake: 0
+    DebilitatedApplyData:
+      StacksToApply: 0
+    CrippledApplyData:
+      StacksToApply: 0
+    DisarrayApplyData:
+      StacksToApply: 0
+    MadnessApplyData:
+      StacksToApply: 0
+    LightApplyData:
+      StacksToApply: 0
+    WoundApplyData:
+      StacksToApply: 0
+  RandomCount: 0
+  RandomPowerToGenerate: 0
+  RandomApplyData: []
+  DeltaTimeCooldown: 0
+  ExtraStatsForScaling:
+    MaxHealth: 0
+    CritChance: 0
+    CritPotency: 0
+    PushbackCritChance: 0
+    PushbackCritPotency: 0
+    PushbackForceModifier: 0
+    PushbackResistance: 0
+    Mass: 0
+    DamageModifier: 0
+    HealingModifier: 0
+    ArmorModifier: 0
+    DamageReduction: 0
+    AttackSpeed: 0
+    BlockChance: 0
+    MovementSpeedModifier: 0
+    JumpCount: 0
+    DashCount: 0
+    ExperienceModifier: 0
+    CollectRange: 0
+    CurrencyModifier: 0
+    EndOfWorldDamageModifier: 0
+    EndOfWorldRegenerationModifier: 0
+    HealthOnLevelUp: 0
+    AreaModifier: 0
+    BaseSkillCooldowns: 0
+    ExtraCastModifier: 0
+    StealthLevel: 0
+    PassiveHealthRegeneration: 0
+  ScaleWithTags: 0
+  ExtraScalingPerTag: 0
+  ScaleWithNegativeEffects: 0
+  ExtraScalingPerNegativeEffect: 0
+  ApplyEffectDeltaTimeCooldown: 0
+--- !u!114 &114357614444706453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402812997410228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 981c8d1d59843afefbd9ce972fd82273, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  TargetFilter:
+    TargetSelf: 0
+    TargetAllegiance: 2
+  Skill: {fileID: 0}
+  CountAsTargetHit: 0
+  Duration: 2
+  PenetretateSoftImmunity: 0
+--- !u!114 &114483787316941790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402812997410228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c99dcaa1bf8eb092abcd3bd3f8bda6bb, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  AutoAimType: 1
+  TargetDistance: 0
+--- !u!114 &114229340956889988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402812997410228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6768df9e871f1f2b8c6cf452aa0bfd61, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  Modifiers:
+    ChangeHealthModifier: 0
+    HealingModifier: 0
+    AreaModifier: 0
+    CooldownModifier: 0
+    CriticalModifier: 0
+    CriticalPotency: 0
+    PushbackModifier: 0
+    ExtraCastModifier: 0
+    SummonHealthModifier: 0
+    SummonDamageModifier: 0
+    SummonDamageReductionModifier: 0
+    SummonMovementSpeedModifier: 0
+    SummonQuantityModifier: 0
+    BuffDurationModifier: 0
+    BuffPotencyModifier: 0
+    PassiveHealthRegenerationModifier: 0
+    ChangeHealthMultiplicativeModifier: 0
+    HealingMultiplicativeModifier: 0
+    AreaMultiplicativeModifier: 0
+    CooldownMultiplicativeModifier: 0
+    CriticalPotencyMultiplicative: 0
+    PushbackMultiplicativeModifier: 0
+    SummonHealthMultiplicativeModifier: 0
+    SummonDamageMultiplicativeModifier: 0
+    SummonMovementSpeedMultiplicativeModifier: 0
+    BuffDurationMultiplicativeModifier: 0
+    BuffPotencyMultiplicativeModifier: 0
+  IgnoredModifiers:
+    ChangeHealthModifier: 0
+    HealingModifier: 0
+    AreaModifier: 0
+    CooldownModifier: 0
+    CriticalModifier: 0
+    CriticalPotency: 0
+    PushbackModifier: 0
+    ExtraCastModifier: 0
+    SummonHealthModifier: 1
+    SummonDamageModifier: 1
+    SummonDamageReductionModifier: 1
+    SummonMovementSpeedModifier: 0
+    SummonQuantityModifier: 1
+    BuffDurationModifier: 1
+    BuffPotencyModifier: 1
+    PassiveHealthRegenerationModifier: 0
+    ChangeHealthMultiplicativeModifier: 0
+    HealingMultiplicativeModifier: 0
+    AreaMultiplicativeModifier: 0
+    CooldownMultiplicativeModifier: 0
+    CriticalPotencyMultiplicative: 0
+    PushbackMultiplicativeModifier: 0
+    SummonHealthMultiplicativeModifier: 0
+    SummonDamageMultiplicativeModifier: 0
+    SummonMovementSpeedMultiplicativeModifier: 0
+    BuffDurationMultiplicativeModifier: 0
+    BuffPotencyMultiplicativeModifier: 0
+  BaseModifiers:
+    ChangeHealthModifier: 0
+    HealingModifier: 0
+    AreaModifier: 0
+    CooldownModifier: 0
+    CriticalModifier: 0
+    CriticalPotency: 0
+    PushbackModifier: 0
+    ExtraCastModifier: 0
+    SummonHealthModifier: 0
+    SummonDamageModifier: 0
+    SummonDamageReductionModifier: 0
+    SummonMovementSpeedModifier: 0
+    SummonQuantityModifier: 0
+    BuffDurationModifier: 0
+    BuffPotencyModifier: 0
+    PassiveHealthRegenerationModifier: 0
+    ChangeHealthMultiplicativeModifier: 0
+    HealingMultiplicativeModifier: 0
+    AreaMultiplicativeModifier: 0
+    CooldownMultiplicativeModifier: 0
+    CriticalPotencyMultiplicative: 0
+    PushbackMultiplicativeModifier: 0
+    SummonHealthMultiplicativeModifier: 0
+    SummonDamageMultiplicativeModifier: 0
+    SummonMovementSpeedMultiplicativeModifier: 0
+    BuffDurationMultiplicativeModifier: 0
+    BuffPotencyMultiplicativeModifier: 0
+--- !u!1 &1406430839341039
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4889789421355505}
+  - component: {fileID: 114669495562215793}
+  - component: {fileID: 114601182269067017}
+  - component: {fileID: 114586160228185559}
+  m_Layer: 10
+  m_Name: Variant-01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4889789421355505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406430839341039}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4434105575812261}
+  - {fileID: 4698268542690442}
+  m_Father: {fileID: 4940590545929009}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &114669495562215793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406430839341039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137573b491153c7a423b235841ad84a1, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  SoundTrait: {fileID: 114586160228185559}
+  AnimationTrait: {fileID: 114601182269067017}
+  TargetAreas:
+  - {fileID: 114697792313055288}
+  TimedVfxs:
+  - {fileID: 114532759439051171}
+--- !u!114 &114601182269067017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406430839341039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 418df60fbec281172f7fd4bd43c8652b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  AnimationName: Whirlwind-01
+  AnimationLayer: 2
+  Fade: 0.1
+--- !u!114 &114586160228185559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406430839341039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 419bc9222f2d4391c5b93a65898cd7f1, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  SoundEventName: SkillsFlameWave
+--- !u!1 &1243518372892282
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4434105575812261}
+  - component: {fileID: 114697792313055288}
+  - component: {fileID: 54396886297043292}
+  m_Layer: 10
+  m_Name: FlameWave-Damage-Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4434105575812261
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243518372892282}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4889789421355505}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114697792313055288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243518372892282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717b8558be1d7de014f74fdfad82ed14, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  DelayToEnable: 0
+  Duration: 0.1
+  Prefab: {fileID: 114758823027815629, guid: 560ad023874809744bfea52b2a6f80c9, type: 2}
+  IgnoreReparenting: 0
+  SpawnInstantlyAndEnableDelayed: 0
+--- !u!54 &54396886297043292
+Rigidbody:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1243518372892282}
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &1875651672958910
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4698268542690442}
+  - component: {fileID: 114532759439051171}
+  m_Layer: 0
+  m_Name: FlameWave-Vfx
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4698268542690442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875651672958910}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.25, y: 0.62, z: 0.29}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4889789421355505}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114532759439051171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875651672958910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcad0612cb173fc6dd9b09fc979cfdac, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  DelayToEnable: 0
+  Duration: 4
+  DelayToStore: 0.5
+  VfxPrefab: {fileID: 114441313832462151, guid: 9f1621ff70f1527458816a1cc38f36c9, type: 2}
+  Reparent: 0
+  FollowRadiusCurve: 0

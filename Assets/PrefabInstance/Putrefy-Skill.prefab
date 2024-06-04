@@ -1,0 +1,484 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1899344506047974
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4840947961492492}
+  - component: {fileID: 114401001216213940}
+  - component: {fileID: 114898297749387294}
+  - component: {fileID: 114054016396098759}
+  - component: {fileID: 114658855361697833}
+  - component: {fileID: 114105149168060227}
+  - component: {fileID: 114894515861786260}
+  m_Layer: 8
+  m_Name: Putrefy-Skill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4840947961492492
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899344506047974}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4054634624991666}
+  - {fileID: 4281544943058093}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &114401001216213940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899344506047974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d24d09ec0138a8ecae801f72205adb, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  SkillName: Putrefy
+  SkillType: 12713992
+  SkillKeywords: 0
+  IgnoreGlobalCooldown: 0
+  IgnoreMulticast: 0
+  StartingCooldown: 0
+  Cooldown: 7.5
+  HasMinCooldownOverride: 0
+  MinCooldownOverride: 0
+  IgnoreTemporaryCooldownReductionFromThisSkill: 0
+  CancelAfterCasting: 1
+  AICanRotateWhileCasting: 0
+  RangeTrait: {fileID: 0}
+  RadiusTrait: {fileID: 0}
+  PriorityTrait: {fileID: 0}
+  BusyTrait: {fileID: 0}
+  ChargingTrait: {fileID: 0}
+  ActivationRequirements:
+    RequiresTargetGroundPosition: 0
+    RequiresTargetPosition: 0
+    RequiresTargetDirection: 0
+    RequiresTargetTransform: 0
+    RequiresChannelingFunc: 0
+    RequiresFrontPositionFunc: 0
+    RequiresFrontPositionGroundFunc: 0
+    RequiresPositionInFrontOfCaster: 0
+    DistanceInFrontOfCaster: 0
+  Modifiers: {fileID: 114054016396098759}
+  UseDeltaTimeEffects: 0
+  IgnorePassiveSkills: 1
+  DeltaTimeCooldownForPassiveSkills: 1
+  SurvivorsData: {fileID: 114898297749387294}
+  NextSkillInSequence: {fileID: 0}
+  HasMandatoryEnvironmentTarget: 0
+  MandatoryEnvironmentTargetId:
+  Effects:
+  - {fileID: 114105149168060227}
+  EffectsIfBehind: []
+  EffectsIfFront: []
+  PositionalEffects: []
+  AnimationTrait: {fileID: 114658855361697833}
+  SoundTrait: {fileID: 0}
+  TargetAreas:
+  - {fileID: 114163970726362078}
+  TimedVfxs: []
+--- !u!114 &114898297749387294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899344506047974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c99dcaa1bf8eb092abcd3bd3f8bda6bb, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  AutoAimType: 1
+  TargetDistance: 0
+--- !u!114 &114054016396098759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899344506047974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6768df9e871f1f2b8c6cf452aa0bfd61, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  Modifiers:
+    ChangeHealthModifier: 0
+    HealingModifier: 0
+    AreaModifier: 0
+    CooldownModifier: 0
+    CriticalModifier: 0
+    CriticalPotency: 0
+    PushbackModifier: 0
+    ExtraCastModifier: 0
+    SummonHealthModifier: 0
+    SummonDamageModifier: 0
+    SummonDamageReductionModifier: 0
+    SummonMovementSpeedModifier: 0
+    SummonQuantityModifier: 0
+    BuffDurationModifier: 0
+    BuffPotencyModifier: 0
+    PassiveHealthRegenerationModifier: 0
+    ChangeHealthMultiplicativeModifier: 0
+    HealingMultiplicativeModifier: 0
+    AreaMultiplicativeModifier: 0
+    CooldownMultiplicativeModifier: 0
+    CriticalPotencyMultiplicative: 0
+    PushbackMultiplicativeModifier: 0
+    SummonHealthMultiplicativeModifier: 0
+    SummonDamageMultiplicativeModifier: 0
+    SummonMovementSpeedMultiplicativeModifier: 0
+    BuffDurationMultiplicativeModifier: 0
+    BuffPotencyMultiplicativeModifier: 0
+  IgnoredModifiers:
+    ChangeHealthModifier: 0
+    HealingModifier: 0
+    AreaModifier: 0
+    CooldownModifier: 0
+    CriticalModifier: 0
+    CriticalPotency: 0
+    PushbackModifier: 0
+    ExtraCastModifier: 0
+    SummonHealthModifier: 1
+    SummonDamageModifier: 1
+    SummonDamageReductionModifier: 1
+    SummonMovementSpeedModifier: 0
+    SummonQuantityModifier: 1
+    BuffDurationModifier: 1
+    BuffPotencyModifier: 1
+    PassiveHealthRegenerationModifier: 0
+    ChangeHealthMultiplicativeModifier: 0
+    HealingMultiplicativeModifier: 0
+    AreaMultiplicativeModifier: 0
+    CooldownMultiplicativeModifier: 0
+    CriticalPotencyMultiplicative: 0
+    PushbackMultiplicativeModifier: 0
+    SummonHealthMultiplicativeModifier: 0
+    SummonDamageMultiplicativeModifier: 0
+    SummonMovementSpeedMultiplicativeModifier: 0
+    BuffDurationMultiplicativeModifier: 0
+    BuffPotencyMultiplicativeModifier: 0
+  BaseModifiers:
+    ChangeHealthModifier: 0
+    HealingModifier: 0
+    AreaModifier: 0
+    CooldownModifier: 0
+    CriticalModifier: 0
+    CriticalPotency: 0
+    PushbackModifier: 0
+    ExtraCastModifier: 0
+    SummonHealthModifier: 0
+    SummonDamageModifier: 0
+    SummonDamageReductionModifier: 0
+    SummonMovementSpeedModifier: 0
+    SummonQuantityModifier: 0
+    BuffDurationModifier: 0
+    BuffPotencyModifier: 0
+    PassiveHealthRegenerationModifier: 0
+    ChangeHealthMultiplicativeModifier: 0
+    HealingMultiplicativeModifier: 0
+    AreaMultiplicativeModifier: 0
+    CooldownMultiplicativeModifier: 0
+    CriticalPotencyMultiplicative: 0
+    PushbackMultiplicativeModifier: 0
+    SummonHealthMultiplicativeModifier: 0
+    SummonDamageMultiplicativeModifier: 0
+    SummonMovementSpeedMultiplicativeModifier: 0
+    BuffDurationMultiplicativeModifier: 0
+    BuffPotencyMultiplicativeModifier: 0
+--- !u!114 &114658855361697833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899344506047974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 418df60fbec281172f7fd4bd43c8652b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  AnimationName: BuffUp
+  AnimationLayer: 1
+  Fade: 0.1
+--- !u!114 &114105149168060227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899344506047974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75a9b02280f4e289e6fcce256149b2ee, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  TargetFilter:
+    TargetSelf: 0
+    TargetAllegiance: 1
+  Skill: {fileID: 0}
+  CountAsTargetHit: 0
+  NearbyTargetFilter: 2
+  Radius: 3
+  LayerMask:
+    serializedVersion: 2
+    m_Bits: 98560
+  Effects:
+  - {fileID: 114894515861786260}
+  VfxPlaceholderType: 3
+  VfxTrait: {fileID: 114590145486859955}
+  ApplyEffectDeltaTimeCooldown: 0
+  ValidTargetEntities: []
+  ValidEntities: []
+  ValidCasterEntities: []
+--- !u!114 &114894515861786260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899344506047974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0a82680523ac51e6c940b49a8db43ed, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  TargetFilter:
+    TargetSelf: 0
+    TargetAllegiance: 2
+  Skill: {fileID: 0}
+  CountAsTargetHit: 1
+  ApplyData:
+    BurnApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    MeltingApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    SlowApplyData:
+      StacksToApply: 0
+    ParalysisApplyData:
+      StacksToApply: 0
+    BleedApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    HemorrhageApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    DoomApplyData:
+      StacksToApply: 0
+      HealthChange: 0
+    CursedApplyData:
+      StacksToApply: 0
+      HealthChange: 0
+    FragilityApplyData:
+      StacksToApply: 0
+    weaknessApplyData:
+      StacksToApply: 0
+    PoisonApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    RotApplyData:
+      StacksToApply: 4
+      TotalDamage: -250
+    DazedApplyData:
+      StacksToApply: 0
+    DisorientedApplyData:
+      StacksToApply: 0
+    ExposedApplyData:
+      StacksToApply: 0
+    VulnerableApplyData:
+      StacksToApply: 0
+    DistractedApplyData:
+      StacksToApply: 0
+    ConfusedApplyData:
+      StacksToApply: 0
+      DamageToTake: 0
+    StiffApplyData:
+      StacksToApply: 0
+    BrittleApplyData:
+      StacksToApply: 0
+      ExtraDamageToTake: 0
+    DebilitatedApplyData:
+      StacksToApply: 0
+    CrippledApplyData:
+      StacksToApply: 0
+    DisarrayApplyData:
+      StacksToApply: 0
+    MadnessApplyData:
+      StacksToApply: 0
+    LightApplyData:
+      StacksToApply: 0
+    WoundApplyData:
+      StacksToApply: 0
+  RandomCount: 0
+  RandomPowerToGenerate: 0
+  RandomApplyData: []
+  DeltaTimeCooldown: 0
+  ExtraStatsForScaling:
+    MaxHealth: 0
+    CritChance: 0
+    CritPotency: 0
+    PushbackCritChance: 0
+    PushbackCritPotency: 0
+    PushbackForceModifier: 0
+    PushbackResistance: 0
+    Mass: 0
+    DamageModifier: 0
+    HealingModifier: 0
+    ArmorModifier: 0
+    DamageReduction: 0
+    AttackSpeed: 0
+    BlockChance: 0
+    MovementSpeedModifier: 0
+    JumpCount: 0
+    DashCount: 0
+    ExperienceModifier: 0
+    CollectRange: 0
+    CurrencyModifier: 0
+    EndOfWorldDamageModifier: 0
+    EndOfWorldRegenerationModifier: 0
+    HealthOnLevelUp: 0
+    AreaModifier: 0
+    BaseSkillCooldowns: 0
+    ExtraCastModifier: 0
+    StealthLevel: 0
+    PassiveHealthRegeneration: 0
+  ScaleWithTags: 0
+  ExtraScalingPerTag: 0
+  ScaleWithNegativeEffects: 0
+  ExtraScalingPerNegativeEffect: 0
+  ApplyEffectDeltaTimeCooldown: 0
+--- !u!1 &1762890065511680
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4054634624991666}
+  - component: {fileID: 114590145486859955}
+  m_Layer: 8
+  m_Name: Putrefy-Sub-Vfx
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4054634624991666
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762890065511680}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4840947961492492}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114590145486859955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1762890065511680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcad0612cb173fc6dd9b09fc979cfdac, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  DelayToEnable: 0
+  Duration: 3
+  DelayToStore: 1
+  VfxPrefab: {fileID: 114002849513379488, guid: 005d479339f09d74e90c57ed196ef4da, type: 2}
+  Reparent: 0
+  FollowRadiusCurve: 0
+--- !u!1 &1930158903329088
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4281544943058093}
+  - component: {fileID: 114163970726362078}
+  - component: {fileID: 54088518232649851}
+  m_Layer: 8
+  m_Name: Putrefy-Damage-Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4281544943058093
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930158903329088}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4840947961492492}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &114163970726362078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930158903329088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717b8558be1d7de014f74fdfad82ed14, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  DelayToEnable: 0
+  Duration: 0.1
+  Prefab: {fileID: 114574691429338451, guid: 85fa22dfcf1b94d42bf6375dcb29b4dd, type: 2}
+  IgnoreReparenting: 0
+  SpawnInstantlyAndEnableDelayed: 0
+--- !u!54 &54088518232649851
+Rigidbody:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930158903329088}
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

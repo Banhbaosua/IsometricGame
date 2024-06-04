@@ -1,0 +1,379 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1881374000356056
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4658259508739309}
+  - component: {fileID: 114150510468642628}
+  - component: {fileID: 114620622156334791}
+  - component: {fileID: 54212635649524225}
+  - component: {fileID: 114883277091176854}
+  - component: {fileID: 114366715762977105}
+  m_Layer: 10
+  m_Name: PiercingFlames-Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4658259508739309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881374000356056}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4490341319855764}
+  - {fileID: 4342834590655248}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &114150510468642628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881374000356056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708fe30f7c40f8cbff77590b81626975, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  HasSpawnSound: 0
+  SpawnSoundEvent:
+  HasTrigger: 0
+  Initialized: 0
+  ForceTrigger: 0
+  IsTriggered: 0
+  Skill: {fileID: 0}
+  Effects:
+  - {fileID: 114620622156334791}
+  - {fileID: 114883277091176854}
+  - {fileID: 114366715762977105}
+  TargetAreas:
+  - {fileID: 114566454778947490}
+  TimedVfxs:
+  - {fileID: 114748229576357964}
+  Pendencies: 0
+--- !u!114 &114620622156334791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881374000356056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa39fda15d499b067b30cdc6becb141, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  TargetFilter:
+    TargetSelf: 0
+    TargetAllegiance: 2
+  Skill: {fileID: 0}
+  CountAsTargetHit: 0
+  Force: 500
+  ExplosionRadius: 10
+  UpwardsModifier: 2
+  ForceMode: 1
+  OverrideReferenceTransform: {fileID: 0}
+--- !u!54 &54212635649524225
+Rigidbody:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881374000356056}
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &114883277091176854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881374000356056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0a82680523ac51e6c940b49a8db43ed, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  TargetFilter:
+    TargetSelf: 0
+    TargetAllegiance: 2
+  Skill: {fileID: 0}
+  CountAsTargetHit: 1
+  ApplyData:
+    BurnApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    MeltingApplyData:
+      StacksToApply: 8
+      TotalDamage: -50
+    SlowApplyData:
+      StacksToApply: 0
+    ParalysisApplyData:
+      StacksToApply: 0
+    BleedApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    HemorrhageApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    DoomApplyData:
+      StacksToApply: 0
+      HealthChange: 0
+    CursedApplyData:
+      StacksToApply: 0
+      HealthChange: 0
+    FragilityApplyData:
+      StacksToApply: 0
+    weaknessApplyData:
+      StacksToApply: 0
+    PoisonApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    RotApplyData:
+      StacksToApply: 0
+      TotalDamage: 0
+    DazedApplyData:
+      StacksToApply: 0
+    DisorientedApplyData:
+      StacksToApply: 0
+    ExposedApplyData:
+      StacksToApply: 0
+    VulnerableApplyData:
+      StacksToApply: 0
+    DistractedApplyData:
+      StacksToApply: 0
+    ConfusedApplyData:
+      StacksToApply: 0
+      DamageToTake: 0
+    StiffApplyData:
+      StacksToApply: 0
+    BrittleApplyData:
+      StacksToApply: 0
+      ExtraDamageToTake: 0
+    DebilitatedApplyData:
+      StacksToApply: 0
+    CrippledApplyData:
+      StacksToApply: 0
+    DisarrayApplyData:
+      StacksToApply: 0
+    MadnessApplyData:
+      StacksToApply: 0
+    LightApplyData:
+      StacksToApply: 0
+    WoundApplyData:
+      StacksToApply: 0
+  RandomCount: 0
+  RandomPowerToGenerate: 0
+  RandomApplyData: []
+  DeltaTimeCooldown: 0
+  ExtraStatsForScaling:
+    MaxHealth: 0
+    CritChance: 0
+    CritPotency: 0
+    PushbackCritChance: 0
+    PushbackCritPotency: 0
+    PushbackForceModifier: 0
+    PushbackResistance: 0
+    Mass: 0
+    DamageModifier: 0
+    HealingModifier: 0
+    ArmorModifier: 0
+    DamageReduction: 0
+    AttackSpeed: 0
+    BlockChance: 0
+    MovementSpeedModifier: 0
+    JumpCount: 0
+    DashCount: 0
+    ExperienceModifier: 0
+    CollectRange: 0
+    CurrencyModifier: 0
+    EndOfWorldDamageModifier: 0
+    EndOfWorldRegenerationModifier: 0
+    HealthOnLevelUp: 0
+    AreaModifier: 0
+    BaseSkillCooldowns: 0
+    ExtraCastModifier: 0
+    StealthLevel: 0
+    PassiveHealthRegeneration: 0
+  ScaleWithTags: 0
+  ExtraScalingPerTag: 0
+  ScaleWithNegativeEffects: 0
+  ExtraScalingPerNegativeEffect: 0
+  ApplyEffectDeltaTimeCooldown: 0
+--- !u!114 &114366715762977105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881374000356056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd21f7875a795d5988afdab5f591c757, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  TargetFilter:
+    TargetSelf: 0
+    TargetAllegiance: 2
+  Skill: {fileID: 0}
+  CountAsTargetHit: 0
+  HealthChange: -300
+  RandomHealthChange: {x: 0, y: 0}
+  CurrentHealthPercentChange: 0
+  MaxHealthPercentChange: 0
+  DeltaTimeCooldown: 0
+  ExtraMultiplierOnCrits: 0
+  ExtraMultiplierPerSummonedEntity: 0
+  IgnoreDefenses: 0
+  ExtraStatsForScaling:
+    MaxHealth: 0
+    CritChance: 0
+    CritPotency: 0
+    PushbackCritChance: 0
+    PushbackCritPotency: 0
+    PushbackForceModifier: 0
+    PushbackResistance: 0
+    Mass: 0
+    DamageModifier: 0
+    HealingModifier: 0
+    ArmorModifier: 0
+    DamageReduction: 0
+    AttackSpeed: 0
+    BlockChance: 0
+    MovementSpeedModifier: 0
+    JumpCount: 0
+    DashCount: 0
+    ExperienceModifier: 0
+    CollectRange: 0
+    CurrencyModifier: 0
+    EndOfWorldDamageModifier: 0
+    EndOfWorldRegenerationModifier: 0
+    HealthOnLevelUp: 0
+    AreaModifier: 0
+    BaseSkillCooldowns: 0
+    ExtraCastModifier: 0
+    StealthLevel: 0
+    PassiveHealthRegeneration: 0
+  ScaleWithTags: 0
+  ExtraScalingPerTag: 0
+  ScaleWithNegativeEffects: 0
+  ExtraScalingPerNegativeEffect: 0
+  ApplyEffectDeltaTimeCooldown: 0
+--- !u!1 &1869427301848881
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4490341319855764}
+  - component: {fileID: 114566454778947490}
+  m_Layer: 10
+  m_Name: Damage-Area-Placeholder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4490341319855764
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869427301848881}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4658259508739309}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114566454778947490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869427301848881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717b8558be1d7de014f74fdfad82ed14, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  DelayToEnable: 1
+  Duration: 0.1
+  Prefab: {fileID: 114688791153138362, guid: e59d44ae12116934eae7696983b48377, type: 2}
+  IgnoreReparenting: 0
+  SpawnInstantlyAndEnableDelayed: 0
+--- !u!1 &1451324822534509
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4342834590655248}
+  - component: {fileID: 114748229576357964}
+  m_Layer: 10
+  m_Name: Vfx-Placeholder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4342834590655248
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451324822534509}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4658259508739309}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &114748229576357964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451324822534509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcad0612cb173fc6dd9b09fc979cfdac, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  DelayToEnable: 0
+  Duration: 5
+  DelayToStore: 1
+  VfxPrefab: {fileID: 114510265497574103, guid: 1e4547215fd6671428d71de24388694f, type: 2}
+  Reparent: 0
+  FollowRadiusCurve: 0

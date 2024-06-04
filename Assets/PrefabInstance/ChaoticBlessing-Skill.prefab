@@ -1,0 +1,574 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1870718378558627
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4148829318448007}
+  - component: {fileID: 114702936680036577}
+  - component: {fileID: 114743617512866449}
+  - component: {fileID: 114186597647088385}
+  - component: {fileID: 114754336508686831}
+  - component: {fileID: 114125238397554909}
+  m_Layer: 8
+  m_Name: ChaoticBlessing-Skill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4148829318448007
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870718378558627}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4349840822737015}
+  - {fileID: 4588314600301960}
+  - {fileID: 4776441136148573}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &114702936680036577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870718378558627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36d24d09ec0138a8ecae801f72205adb, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  SkillName: ChaoticBlessing
+  SkillType: 0
+  SkillKeywords: 0
+  IgnoreGlobalCooldown: 0
+  IgnoreMulticast: 1
+  StartingCooldown: 0
+  Cooldown: 8
+  HasMinCooldownOverride: 0
+  MinCooldownOverride: 0
+  IgnoreTemporaryCooldownReductionFromThisSkill: 1
+  CancelAfterCasting: 1
+  AICanRotateWhileCasting: 0
+  RangeTrait: {fileID: 0}
+  RadiusTrait: {fileID: 0}
+  PriorityTrait: {fileID: 0}
+  BusyTrait: {fileID: 0}
+  ChargingTrait: {fileID: 0}
+  ActivationRequirements:
+    RequiresTargetGroundPosition: 0
+    RequiresTargetPosition: 0
+    RequiresTargetDirection: 0
+    RequiresTargetTransform: 0
+    RequiresChannelingFunc: 0
+    RequiresFrontPositionFunc: 0
+    RequiresFrontPositionGroundFunc: 0
+    RequiresPositionInFrontOfCaster: 0
+    DistanceInFrontOfCaster: 0
+  Modifiers: {fileID: 114186597647088385}
+  UseDeltaTimeEffects: 0
+  IgnorePassiveSkills: 1
+  DeltaTimeCooldownForPassiveSkills: 1
+  SurvivorsData: {fileID: 114743617512866449}
+  NextSkillInSequence: {fileID: 0}
+  HasMandatoryEnvironmentTarget: 0
+  MandatoryEnvironmentTargetId:
+  Effects:
+  - {fileID: 114125238397554909}
+  EffectsIfBehind: []
+  EffectsIfFront: []
+  PositionalEffects: []
+  AnimationTrait: {fileID: 114754336508686831}
+  SoundTrait: {fileID: 0}
+  TargetAreas:
+  - {fileID: 114156149959225254}
+  TimedVfxs:
+  - {fileID: 114392588955555118}
+--- !u!114 &114743617512866449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870718378558627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c99dcaa1bf8eb092abcd3bd3f8bda6bb, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  AutoAimType: 1
+  TargetDistance: 0
+--- !u!114 &114186597647088385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870718378558627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6768df9e871f1f2b8c6cf452aa0bfd61, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  Modifiers:
+    ChangeHealthModifier: 0
+    HealingModifier: 0
+    AreaModifier: 0
+    CooldownModifier: 0
+    CriticalModifier: 0
+    CriticalPotency: 0
+    PushbackModifier: 0
+    ExtraCastModifier: 0
+    SummonHealthModifier: 0
+    SummonDamageModifier: 0
+    SummonDamageReductionModifier: 0
+    SummonMovementSpeedModifier: 0
+    SummonQuantityModifier: 0
+    BuffDurationModifier: 0
+    BuffPotencyModifier: 0
+    PassiveHealthRegenerationModifier: 0
+    ChangeHealthMultiplicativeModifier: 0
+    HealingMultiplicativeModifier: 0
+    AreaMultiplicativeModifier: 0
+    CooldownMultiplicativeModifier: 0
+    CriticalPotencyMultiplicative: 0
+    PushbackMultiplicativeModifier: 0
+    SummonHealthMultiplicativeModifier: 0
+    SummonDamageMultiplicativeModifier: 0
+    SummonMovementSpeedMultiplicativeModifier: 0
+    BuffDurationMultiplicativeModifier: 0
+    BuffPotencyMultiplicativeModifier: 0
+  IgnoredModifiers:
+    ChangeHealthModifier: 0
+    HealingModifier: 0
+    AreaModifier: 0
+    CooldownModifier: 0
+    CriticalModifier: 1
+    CriticalPotency: 0
+    PushbackModifier: 1
+    ExtraCastModifier: 1
+    SummonHealthModifier: 1
+    SummonDamageModifier: 1
+    SummonDamageReductionModifier: 1
+    SummonMovementSpeedModifier: 0
+    SummonQuantityModifier: 1
+    BuffDurationModifier: 0
+    BuffPotencyModifier: 0
+    PassiveHealthRegenerationModifier: 0
+    ChangeHealthMultiplicativeModifier: 0
+    HealingMultiplicativeModifier: 0
+    AreaMultiplicativeModifier: 0
+    CooldownMultiplicativeModifier: 0
+    CriticalPotencyMultiplicative: 0
+    PushbackMultiplicativeModifier: 0
+    SummonHealthMultiplicativeModifier: 0
+    SummonDamageMultiplicativeModifier: 0
+    SummonMovementSpeedMultiplicativeModifier: 0
+    BuffDurationMultiplicativeModifier: 0
+    BuffPotencyMultiplicativeModifier: 0
+  BaseModifiers:
+    ChangeHealthModifier: 0
+    HealingModifier: 0
+    AreaModifier: 0
+    CooldownModifier: 0
+    CriticalModifier: 0
+    CriticalPotency: 0
+    PushbackModifier: 0
+    ExtraCastModifier: 0
+    SummonHealthModifier: 0
+    SummonDamageModifier: 0
+    SummonDamageReductionModifier: 0
+    SummonMovementSpeedModifier: 0
+    SummonQuantityModifier: 0
+    BuffDurationModifier: 0
+    BuffPotencyModifier: 0
+    PassiveHealthRegenerationModifier: 0
+    ChangeHealthMultiplicativeModifier: 0
+    HealingMultiplicativeModifier: 0
+    AreaMultiplicativeModifier: 0
+    CooldownMultiplicativeModifier: 0
+    CriticalPotencyMultiplicative: 0
+    PushbackMultiplicativeModifier: 0
+    SummonHealthMultiplicativeModifier: 0
+    SummonDamageMultiplicativeModifier: 0
+    SummonMovementSpeedMultiplicativeModifier: 0
+    BuffDurationMultiplicativeModifier: 0
+    BuffPotencyMultiplicativeModifier: 0
+--- !u!114 &114754336508686831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870718378558627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 418df60fbec281172f7fd4bd43c8652b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  AnimationName: BuffUp
+  AnimationLayer: 1
+  Fade: 0.1
+--- !u!114 &114125238397554909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870718378558627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c34983a351e8375f6fb116fe7cd56be2, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  TargetFilter:
+    TargetSelf: 1
+    TargetAllegiance: 1
+  Skill: {fileID: 0}
+  CountAsTargetHit: 1
+  PossibleEffects:
+  - Duration: 8
+    Additive: 0
+    StatsToChange:
+      MaxHealth: 0
+      CritChance: 0
+      CritPotency: 0
+      PushbackCritChance: 0
+      PushbackCritPotency: 0
+      PushbackForceModifier: 0
+      PushbackResistance: 0
+      Mass: 0
+      DamageModifier: 0.5
+      HealingModifier: 0
+      ArmorModifier: 0
+      DamageReduction: 0
+      AttackSpeed: 0
+      BlockChance: 0
+      MovementSpeedModifier: 0
+      JumpCount: 0
+      DashCount: 0
+      ExperienceModifier: 0
+      CollectRange: 0
+      CurrencyModifier: 0
+      EndOfWorldDamageModifier: 0
+      EndOfWorldRegenerationModifier: 0
+      HealthOnLevelUp: 0
+      AreaModifier: 0
+      BaseSkillCooldowns: 0
+      ExtraCastModifier: 0
+      StealthLevel: 0
+      PassiveHealthRegeneration: 0
+    BuffVfxs:
+    - VfxTrait: {fileID: 114642558423372219}
+      PlaceholderType: 2
+  - Duration: 8
+    Additive: 0
+    StatsToChange:
+      MaxHealth: 0
+      CritChance: 0
+      CritPotency: 0
+      PushbackCritChance: 0
+      PushbackCritPotency: 0
+      PushbackForceModifier: 0
+      PushbackResistance: 0
+      Mass: 0
+      DamageModifier: 0
+      HealingModifier: 0
+      ArmorModifier: 0
+      DamageReduction: 0
+      AttackSpeed: 0.5
+      BlockChance: 0
+      MovementSpeedModifier: 0
+      JumpCount: 0
+      DashCount: 0
+      ExperienceModifier: 0
+      CollectRange: 0
+      CurrencyModifier: 0
+      EndOfWorldDamageModifier: 0
+      EndOfWorldRegenerationModifier: 0
+      HealthOnLevelUp: 0
+      AreaModifier: 0
+      BaseSkillCooldowns: 0
+      ExtraCastModifier: 0
+      StealthLevel: 0
+      PassiveHealthRegeneration: 0
+    BuffVfxs:
+    - VfxTrait: {fileID: 114642558423372219}
+      PlaceholderType: 2
+  - Duration: 8
+    Additive: 0
+    StatsToChange:
+      MaxHealth: 0
+      CritChance: 0
+      CritPotency: 0
+      PushbackCritChance: 0
+      PushbackCritPotency: 0
+      PushbackForceModifier: 0
+      PushbackResistance: 0
+      Mass: 0
+      DamageModifier: 0
+      HealingModifier: 0
+      ArmorModifier: 0
+      DamageReduction: 0
+      AttackSpeed: 0
+      BlockChance: 0
+      MovementSpeedModifier: 0.5
+      JumpCount: 0
+      DashCount: 0
+      ExperienceModifier: 0
+      CollectRange: 0
+      CurrencyModifier: 0
+      EndOfWorldDamageModifier: 0
+      EndOfWorldRegenerationModifier: 0
+      HealthOnLevelUp: 0
+      AreaModifier: 0
+      BaseSkillCooldowns: 0
+      ExtraCastModifier: 0
+      StealthLevel: 0
+      PassiveHealthRegeneration: 0
+    BuffVfxs:
+    - VfxTrait: {fileID: 114642558423372219}
+      PlaceholderType: 2
+  - Duration: 8
+    Additive: 0
+    StatsToChange:
+      MaxHealth: 0
+      CritChance: 0
+      CritPotency: 0
+      PushbackCritChance: 0
+      PushbackCritPotency: 0
+      PushbackForceModifier: 0
+      PushbackResistance: 0
+      Mass: 0
+      DamageModifier: 0
+      HealingModifier: 0
+      ArmorModifier: 0
+      DamageReduction: 0
+      AttackSpeed: 0
+      BlockChance: 0
+      MovementSpeedModifier: 0
+      JumpCount: 0
+      DashCount: 0
+      ExperienceModifier: 0
+      CollectRange: 0
+      CurrencyModifier: 0
+      EndOfWorldDamageModifier: 0
+      EndOfWorldRegenerationModifier: 0
+      HealthOnLevelUp: 0
+      AreaModifier: 0.5
+      BaseSkillCooldowns: 0
+      ExtraCastModifier: 0
+      StealthLevel: 0
+      PassiveHealthRegeneration: 0
+    BuffVfxs:
+    - VfxTrait: {fileID: 114642558423372219}
+      PlaceholderType: 2
+  - Duration: 8
+    Additive: 0
+    StatsToChange:
+      MaxHealth: 0
+      CritChance: 0
+      CritPotency: 0
+      PushbackCritChance: 0
+      PushbackCritPotency: 0
+      PushbackForceModifier: 0
+      PushbackResistance: 0
+      Mass: 0
+      DamageModifier: 0
+      HealingModifier: 0
+      ArmorModifier: 0
+      DamageReduction: 0
+      AttackSpeed: 0
+      BlockChance: 0
+      MovementSpeedModifier: 0
+      JumpCount: 0
+      DashCount: 0
+      ExperienceModifier: 0
+      CollectRange: 0
+      CurrencyModifier: 0
+      EndOfWorldDamageModifier: 0
+      EndOfWorldRegenerationModifier: 0
+      HealthOnLevelUp: 0
+      AreaModifier: 0
+      BaseSkillCooldowns: 0
+      ExtraCastModifier: 0.5
+      StealthLevel: 0
+      PassiveHealthRegeneration: 0
+    BuffVfxs:
+    - VfxTrait: {fileID: 114642558423372219}
+      PlaceholderType: 2
+--- !u!1 &1491263583927080
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4349840822737015}
+  - component: {fileID: 114392588955555118}
+  m_Layer: 8
+  m_Name: ChaoticBlessing-Vfx
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4349840822737015
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491263583927080}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4148829318448007}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114392588955555118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491263583927080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcad0612cb173fc6dd9b09fc979cfdac, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  DelayToEnable: 0
+  Duration: 3
+  DelayToStore: 1
+  VfxPrefab: {fileID: 114324417326862464, guid: 4223cd828d405654291b55073bfff3a7, type: 2}
+  Reparent: 0
+  FollowRadiusCurve: 0
+--- !u!1 &1784809347913605
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4588314600301960}
+  - component: {fileID: 114156149959225254}
+  - component: {fileID: 54617017060972106}
+  m_Layer: 8
+  m_Name: ChaoticBlessing-Damage-Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4588314600301960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784809347913605}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4148829318448007}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &114156149959225254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784809347913605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717b8558be1d7de014f74fdfad82ed14, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  DelayToEnable: 0
+  Duration: 0.1
+  Prefab: {fileID: 114580732390848438, guid: a9a692966552ae34492818fff33c8dd8, type: 2}
+  IgnoreReparenting: 0
+  SpawnInstantlyAndEnableDelayed: 0
+--- !u!54 &54617017060972106
+Rigidbody:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784809347913605}
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!1 &1623183064036804
+GameObject:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Component:
+  - component: {fileID: 4776441136148573}
+  - component: {fileID: 114642558423372219}
+  m_Layer: 8
+  m_Name: ChaoticBlessing-Buff-Vfx-MiddleBody
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4776441136148573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623183064036804}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4148829318448007}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114642558423372219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623183064036804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcad0612cb173fc6dd9b09fc979cfdac, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  DelayToEnable: 0
+  Duration: 15
+  DelayToStore: 1
+  VfxPrefab: {fileID: 114850248349067506, guid: a3f763e9c7e33f448afefece05900ebc, type: 2}
+  Reparent: 1
+  FollowRadiusCurve: 0

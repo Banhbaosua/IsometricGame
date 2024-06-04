@@ -1,55 +1,112 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using MonsterLove.StateMachine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private Rigidbody _rgbd;
-    [SerializeField] private Transform _transform;
-    [SerializeField] private float _speed = 5f;
-    [SerializeField] private float _turnSpeed = 360f;
-    private Vector3 _input;
+    [SerializeField] CharacterController characterController;
+    [SerializeField] PlayerInput playerInput;
+    [SerializeField] Animator animator;
+    [SerializeField] float _speed;
+    [SerializeField] private LayerMask groundMask;
+    [SerializeField] CharacterData characterData;
 
+    private Vector3 _direction;
+    private float _velocity;
+    private float _gravity = -Physics.gravity.magnitude;
+
+    StateMachine<MovementStates,GameCharacter> fsm;
+    private void Awake()
+    {
+        fsm = new StateMachine<MovementStates,GameCharacter>(this);
+        fsm.ChangeState(MovementStates.Move);
+
+        characterData.HealthController.OnDeath += fsm.Driver.OnDeath.Invoke;
+    }
+    void Start()
+    {
+        
+    }
     void Update()
     {
-        GetInput();
-        Look();
-
-    }
-    void FixedUpdate()
-    {
-        Move();
+        fsm.Driver.Update.Invoke();
     }
 
-    void GetInput()
+    void Move_Update()
     {
-        _input = new Vector3(UnityEngine.Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+        MoveCharacter();
+        SetCharacterAnimateBlend();
+        LookAtMouse();
     }
 
-    void Look()
+    void Move_Enter()
     {
-        if (_input != Vector3.zero) 
+        Debug.Log("enter");
+    }
+
+    void Move_OnDeath(bool value)
+    {
+        if (value)
         {
-            var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
-            var skewedInput = matrix.MultiplyPoint3x4(_input);
-
-            var relative = (_transform.position + skewedInput) - _transform.position;
-            var rota = Quaternion.LookRotation(relative, Vector3.up);
-
-            _transform.rotation = Quaternion.RotateTowards(_transform.rotation,rota, _turnSpeed*Time.deltaTime);
-            Move();
+            fsm.ChangeState(MovementStates.Death);
         }
-
     }
-    void Move()
+
+    void Death_Enter()
     {
-        _rgbd.MovePosition(_transform.position + _input.ToIso() * _input.normalized.magnitude * _speed * Time.deltaTime);
+        characterData.HealthController.OnDeath -= fsm.Driver.OnDeath.Invoke;
     }
-}
+
+    private void MoveCharacter()
+    {
+        _velocity += _gravity * Time.deltaTime;
+        _direction.y = _velocity;
+        characterController.Move(_direction * _speed * Time.deltaTime);
+    }
+
+    private void SetCharacterAnimateBlend()
+    {
+        animator.SetFloat("X", _direction.x,0.1f,Time.deltaTime);
+        animator.SetFloat("Y", _direction.z,0.1f, Time.deltaTime);
+    }
+
+    private void LookAtMouse()
+    {
+        var mousePos = GetMousePos();
+        transform.forward = mousePos - transform.localPosition;
+        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+    }
+
+    private Vector3 GetMousePos()
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(ray, out var hitPoint,Mathf.Infinity,groundMask);
+        
+        return hitPoint.point;
+    }
+
+    public void GetMoveDirection(InputAction.CallbackContext context)
+    { 
+        _direction = context.ReadValue<Vector3>().normalized;
+        
+    }
+
+    public enum MovementStates
+    {
+        Move,
+        Dash,
+        Death,
+    }
+
+    public class GameCharacter
+    {
+        public StateEvent Update;
+        public StateEvent<bool> OnDeath;
+        public StateEvent<Collision> OnCollision;
+    }
 
 
-public static class Helpers
-{
-    private static Matrix4x4 _isoMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
-    public static Vector3 ToIso(this Vector3 input) => _isoMatrix.MultiplyPoint3x4(input);
 }
