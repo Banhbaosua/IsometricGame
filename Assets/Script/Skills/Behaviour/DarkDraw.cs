@@ -24,6 +24,7 @@ public class DarkDraw : Skill, IArea, ICastOnPlayer
     {
         base.Initiate();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        Debug.Log(player);
     }
 
     protected override void SkillBehavior()

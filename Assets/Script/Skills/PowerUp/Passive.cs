@@ -8,7 +8,6 @@ public class Passive : PowerUps
     [SerializeField] List<StatWeightWrapper> list;
     private AddictiveStat rolledStat;
     public AddictiveStat RolldedStat => rolledStat;
-    private string _descripton;
     public override void Apply(CharacterData characterData)
     {
         characterData.StatList[rolledStat.Type].AddAddictiveStats(rolledStat.Value, this);
@@ -25,10 +24,15 @@ public class Passive : PowerUps
             if (rd < 0)
             {
                 rolledStat = list[index].AddictiveStat;
+                SetRarity(list[index].Rarity);
                 return;
             }
         }
-        _descripton = Description + " " + rolledStat.Value.ToString();
+    }
+
+    public override string GetDescription()
+    {
+        return Description + " " + rolledStat.Value.ToString();
     }
 }
 [System.Serializable]
@@ -36,6 +40,8 @@ public class StatWeightWrapper
 {
     [SerializeField] AddictiveStat addictiveStat;
     [SerializeField] float weight;
+    [SerializeField] Rarity rarity;
     public float Weight => weight;
     public AddictiveStat AddictiveStat => addictiveStat;
+    public Rarity Rarity => rarity;
 }

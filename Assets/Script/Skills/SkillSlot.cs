@@ -1,51 +1,60 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UniRx;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class SkillSlot : MonoBehaviour, IPointerClickHandler
+public class SkillSlot : MonoBehaviour
 {
     [SerializeField] int slotIndex;
-    [SerializeField] GameEvent onSkillReplace;
-    private Skill skillToReplace;
-    private SkillSlotInfo slotInfo;
+    [SerializeField] Button button;
+    [SerializeField] Image icon;
+    [SerializeField] Image coolDownImg;
+    private List<SkillCard> skillCards;
 
-    public void OnPointerClick(PointerEventData eventData)
+    private Skill currentSkill;
+    private Transform skillGO;
+    private Subject<int> slotIndexChosen;
+    private float timer;
+    public IObservable<int> SlotIndexChosen => slotIndexChosen;
+    public Skill CurrentSkill => currentSkill;
+    public List<SkillCard> SkillCards => skillCards;
+    private void Awake()
     {
-        WrapSkillSlotInfo(slotIndex, skillToReplace);
-        onSkillReplace.Notify(this, slotInfo);
     }
 
-    public void SkillCardInfo(Component sender, object data)
+    private void Update()
     {
-        if(data.GetType() == typeof(Skill))
+        if(currentSkill != null) 
         {
-            skillToReplace = (Skill)data;
+            coolDownImg.fillAmount = currentSkill.Timer;
         }
     }
-    public void WrapSkillSlotInfo(int slotIndex, Skill skill)
+    public void Set(Skill skill)
     {
-        slotInfo = new SkillSlotInfo(slotIndex, skill);
-    }
-    void Start()
-    {
-        
+        skillGO = skill.InstantiateSkill(null).transform;
+        skillGO.gameObject.SetActive(true);
+        currentSkill = skillGO.GetComponent<Skill>();
+        icon.sprite = skill.Icon;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Remove()
     {
-        
+        Destroy(skillGO.gameObject);
     }
-}
 
-public class SkillSlotInfo
-{
-    public int slotIndex;
-    public Skill skill;
-    public SkillSlotInfo(int slotIndex, Skill skill) 
-    { 
-        this.slotIndex = slotIndex;
-        this.skill = skill;
+    public void GenerateCardList(List<SkillCard> list)
+    {
+        skillCards = list;
+    }
+
+    public void Initiate()
+    {
+        slotIndexChosen = new Subject<int>();
+        button.OnClickAsObservable().Subscribe(_ => slotIndexChosen.OnNext(slotIndex));
     }
 }

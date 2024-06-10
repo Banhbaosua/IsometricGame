@@ -21,6 +21,7 @@ public class SkillData : ScriptableObject
     public float BaseDamage => baseDamage;
     public float CastFreq => castFreq;
     public Sprite Icon => icon;
+    public GameObject Prefab => prefab;
 }
 
 public static class ModifyValueExtension

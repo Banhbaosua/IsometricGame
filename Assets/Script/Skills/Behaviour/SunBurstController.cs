@@ -57,8 +57,7 @@ public class SunBurstController : Skill, IDuration, IArea,ICastOnArea
     {
         if (Entities.Count < maxEntity)
         {
-            bool foundEnemy = false;
-            while (!foundEnemy)
+            while (true)
             {
                 yield return new WaitForFixedUpdate();
                 if (enemies.Length == 0)
@@ -75,7 +74,7 @@ public class SunBurstController : Skill, IDuration, IArea,ICastOnArea
                 var gameObj = Instantiate(maker.gameObject, this.transform);
                 gameObj.SetActive(true);
                 Entities.Add(gameObj.transform);
-                StopCoroutine(FindEnemy());
+                break;
             }
         }
     }

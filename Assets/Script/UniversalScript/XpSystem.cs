@@ -15,6 +15,7 @@ public class XpSystem : MonoBehaviour
     [SerializeField] float growthRate;
     private ReactiveProperty<int> level;
     private Subject<Unit> onLevelUp;
+    private float previousXpValue = 0f;
     public IObservable<Unit> OnLevelUP => onLevelUp;
 
     float GetExpForLevel(int level)
@@ -30,12 +31,13 @@ public class XpSystem : MonoBehaviour
 
     void Start()
     {
-        xp.RPValue.Subscribe(_ =>
+        xp.RPValue.Subscribe(x =>
         {
-            XpToSliderValue();
+            XpToSliderValue(x);
+            previousXpValue = x;
         });
 
-        xp.RPValue.Where(x => x >= GetExpForLevel(level.Value))
+        xp.RPValue.Where(x => x >= GetExpForLevel(level.Value + 1)) //.Select(x => x -= GetExpForLevel(level.Value))
             .Subscribe(x =>
             {
                 LevelUp();
@@ -48,14 +50,12 @@ public class XpSystem : MonoBehaviour
             });
     }
 
-    void XpToSliderValue()
+    void XpToSliderValue(float exp)
     {
-        var maxXp = GetExpForLevel(level.Value);
-        if (level.Value == 0)
-        {
-            maxXp = baseXp;
-        }
-        xpSlider.value = xp.RPValue.Value / maxXp;
+        var maxXp = GetExpForLevel(level.Value+1);
+        var percent = (exp-previousXpValue)/ maxXp;
+
+        xpSlider.value += percent;
     }
 
     void LevelUp()
