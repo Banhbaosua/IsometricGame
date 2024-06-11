@@ -18,10 +18,13 @@ namespace SpawnerSystem
         [SerializeField] List<EnemyPoolData> poolData;
         [SerializeField] GameObject expGemPref;
         [SerializeField] Transform gemPoolParent;
+
+        [Header("Map limit")]
         [SerializeField] Transform leftMap;
         [SerializeField] Transform rightMap;
         [SerializeField] Transform topMap;
         [SerializeField] Transform bottomMap;
+
         private Subject<string> onEnemySpawnReQuest;
         private Dictionary<string, PoolActiveData> enemies;
         private Queue<GameObject> expGemPool;
