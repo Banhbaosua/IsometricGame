@@ -23,6 +23,7 @@ public class SkillCard : MonoBehaviour
     private Skill skill;
     private Subject<Skill> onSkillChosen;
     public IObservable<Skill> OnSkillChosen=> onSkillChosen;
+    public Skill Skill => skill;
 
     public void Choose(PowerUps pu = null, Skill skill = null)
     {
@@ -35,6 +36,7 @@ public class SkillCard : MonoBehaviour
             onSkillChosen.OnNext(skill);
         }
         transform.parent.gameObject.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void Set(PowerUps pu = null, Skill skill = null)
@@ -55,9 +57,6 @@ public class SkillCard : MonoBehaviour
             cardIcon.sprite = skill.SkillData.Icon;
             description.text = skill.Description;
         }
-    }
-    private void Awake()
-    {
     }
 
     public void Initiate()

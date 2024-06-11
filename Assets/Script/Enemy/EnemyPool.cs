@@ -15,7 +15,7 @@ namespace SpawnerSystem
     }
     public class EnemyPool : MonoBehaviour
     {
-        [SerializeField] List<EnemyPoolData> poolData;
+        [SerializeField] SpawnerData poolData;
         [SerializeField] GameObject expGemPref;
         [SerializeField] Transform gemPoolParent;
 
@@ -112,7 +112,7 @@ namespace SpawnerSystem
 
         void InitiatePool()
         {
-            foreach (EnemyPoolData data in poolData)
+            foreach (EnemyPoolData data in poolData.List)
             {
                 var enemyList = new Queue<GameObject>();
                 var objParent = new GameObject(data.MonsterName);

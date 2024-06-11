@@ -8,8 +8,6 @@ public class DimensionCutter : Skill, IArea, IFollowCursor, ICastOnPlayer
     [SerializeField] Collider damageArea;
     [SerializeField] MultipleObjectsMake objectMaker;
     [SerializeField] ObjectMove objectMove;
-
-    private Transform player;
     public float AreaModifier { get => areaModifier; set => areaModifier.MultiplyValue(value); }
 
     public Collider DamageArea => damageArea;

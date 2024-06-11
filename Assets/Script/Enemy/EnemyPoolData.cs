@@ -2,11 +2,12 @@ using SpawnerSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace SpawnerSystem
 {
-    [CreateAssetMenu(fileName = "EnemyData", menuName = "Enemy")]
-    public class EnemyPoolData : ScriptableObject
+    [Serializable]
+    public class EnemyPoolData
     {
         [SerializeField] EnemyType type;
         [SerializeField] int poolAmount;

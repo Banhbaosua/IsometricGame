@@ -15,14 +15,8 @@ public class WinBladeController : Skill, ICastOnPlayer
     [SerializeField] int chainTimes;
     [SerializeField] float moveSpeed;
 
-    private Vector3 objectMakerPos => new Vector3(player.transform.position.x, 1, player.transform.position.z);
-    private Transform player;
+    private Vector3 objectSpawnPos => new Vector3(player.transform.position.x, 1, player.transform.position.z);
     public Transform Player => player;
-
-    protected override void DealDamage(HealthController healthCtl)
-    {
-        base.DealDamage(healthCtl);
-    }
 
     protected override void Initiate()
     {
@@ -34,7 +28,7 @@ public class WinBladeController : Skill, ICastOnPlayer
     protected override void SkillBehavior()
     {
         base.SkillBehavior();
-        GameObject windBlade = Instantiate(wbPref, objectMakerPos, Quaternion.identity, this.transform);
+        GameObject windBlade = Instantiate(wbPref, objectSpawnPos, Quaternion.identity, this.transform);
         var timer = Observable.Interval(TimeSpan.FromSeconds(4))
                                 .Subscribe(_ => Destroy(windBlade)).AddTo(windBlade);
         windBlade.transform.forward = player.forward;
@@ -43,22 +37,17 @@ public class WinBladeController : Skill, ICastOnPlayer
                                     .Select(x => windBlade)
                                     .Subscribe(x => x.transform.Translate(moveSpeed * Time.deltaTime * Vector3.forward)).AddTo(windBlade);
         windBlade.GetComponent<SphereCollider>().OnTriggerEnterAsObservable()
-            .First()
+            .FirstOrDefault()
             .Subscribe(x =>
             {
                 windBladeMove.Dispose();
+                DealDamage(x.GetComponent<HealthController>());
                 var nearest = NearestEnemyList(chainTimes, x.transform);
                 if (nearest.Length > 0)
                     FlyTowardNearest(windBlade.transform, nearest);
                 else
                     Destroy(windBlade);
             }).AddTo(windBlade);
-        //windBlade.OnDestroyAsObservable().Subscribe(_ => windBladeMove?.Dispose());
-    }
-    // Start is called before the first frame update
-    protected override void Start()
-    {
-        base.Start();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -112,7 +101,7 @@ public class WinBladeController : Skill, ICastOnPlayer
         return nearistEnemies.ToArray();
     }
 
-    void FlyTowardNearest(Transform obj ,Transform[] enemy)
+    void FlyTowardNearest(Transform windBlade ,Transform[] enemy)
     {
         var moveStream = Observable.EveryFixedUpdate();
         
@@ -128,11 +117,11 @@ public class WinBladeController : Skill, ICastOnPlayer
             var moveSubscription = moveStream
                 .Where(_ => currentIndex < chainCount)
                 .Select(_ => new Vector3(enemy[currentIndex].position.x, 1, enemy[currentIndex].position.z))
-                .Select(enemy => (enemy - obj.position).normalized)
+                .Select(enemy => (enemy - windBlade.position).normalized)
                 .Subscribe(direction =>
                 {
-                    obj.transform.forward = direction;
-                    obj.transform.Translate(moveSpeed * Time.deltaTime * Vector3.forward);
+                    windBlade.transform.forward = direction;
+                    windBlade.transform.Translate(moveSpeed * Time.deltaTime * Vector3.forward);
 
                 });
 
@@ -151,21 +140,20 @@ public class WinBladeController : Skill, ICastOnPlayer
             //    });
             var hitcheck = moveStream
                 .Where(_ => currentIndex < chainCount)
-                .Select(_ => obj)
-                .Where(obj => Vector3.SqrMagnitude(obj.transform.position - enemy[currentIndex].transform.position) < 1f)
-                .Subscribe(obj =>
+                .Select(_ => windBlade)
+                .Where(windBlade => Vector3.SqrMagnitude(windBlade.transform.position - enemy[currentIndex].transform.position) < 1f)
+                .Subscribe(windBlade =>
                 {
+                    DealDamage(enemy[currentIndex].GetComponent<HealthController>());
                     if (currentIndex < chainCount)
                     {
                         currentIndex++;
                         if (currentIndex == chainCount)
-                            Destroy(obj.gameObject);
+                            Destroy(windBlade.gameObject);
                     }
                 });
 
-            
-
-            obj.OnDestroyAsObservable().Subscribe(_ =>
+            windBlade.OnDestroyAsObservable().Subscribe(_ =>
             {
                 moveSubscription?.Dispose();
             });

@@ -12,7 +12,7 @@ public class SunBurstController : Skill, IDuration, IArea,ICastOnArea
     [SerializeField] MultipleObjectsMake impactMaker;
     [SerializeField] Transform maker;
     [SerializeField] float maxEntity;
-    private Transform player;
+
     private Transform attachedEnemy;
     private List<Transform> attachedEnemyList;
     private Collider[] enemies = new Collider[0];

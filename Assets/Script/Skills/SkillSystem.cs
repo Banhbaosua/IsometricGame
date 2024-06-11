@@ -42,7 +42,6 @@ public class SkillSystem : MonoBehaviour
         skillCombinedStream.Where(_ => !skillInventory.IsFull)
              .Subscribe(x=>
              {
-                 Debug.Log(x);
                  Add(x);
              });
 

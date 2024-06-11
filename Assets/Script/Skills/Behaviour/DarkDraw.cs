@@ -12,8 +12,6 @@ public class DarkDraw : Skill, IArea, ICastOnPlayer
     [SerializeField] private Rigidbody body;
 
     private float areaMod;
-    private Transform player;
-
     public float AreaModifier { get => areaMod; set => areaMod.MultiplyValue(value); }
 
     public Collider DamageArea => hitBox;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public abstract class Skill : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public abstract class Skill : MonoBehaviour
     private float castFreq;
     private float timer;
     private bool inCooldown;
+    protected Transform player;
 
     public SkillData SkillData => skillData;
     public string Description => skillData.Description;
@@ -76,10 +78,17 @@ public abstract class Skill : MonoBehaviour
         castFreq = 0f;
         SkillCoolDown = coolDown/(1+(float)characterData.CastFrequencyModifier);
         Damage = (float)characterData.DamageModifier;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
     protected virtual void DealDamage(HealthController healthCtl)
     {
         healthCtl.TakeDamage(Damage);
+    }
+
+    protected virtual void DestroyAfterTime(GameObject skillObject, float time)
+    {
+        var timer = Observable.Interval(TimeSpan.FromSeconds(time))
+                                .Subscribe(_ => Destroy(skillObject)).AddTo(skillObject);
     }
 
     protected virtual void Start()

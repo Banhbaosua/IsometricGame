@@ -1,18 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SpawnerSystem;
 
-public class SpawnerData : MonoBehaviour
+[CreateAssetMenu(fileName = "LevelSetting",menuName ="Setting/LevelSetting")]
+public class SpawnerData : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] List<EnemyPoolData> list;
+    public List<EnemyPoolData> List => list;
 }
