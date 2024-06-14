@@ -11,18 +11,21 @@ public class SkillSystem : MonoBehaviour
     [SerializeField] List<SkillSlot> slots;
     [SerializeField] List<SkillCard> cards;
     [SerializeField] CurrentClassData currentClassData;
-
+    private List<Skill> chosenSkill;
+    public List<Skill> ChosenSkill => chosenSkill;
     IObservable<int> indexCombinedStream;
     IObservable<Skill> skillCombinedStream;
     public IObservable<(int, Skill)> indexSkillStream;
 
     private void Awake()
     {
+        chosenSkill = new List<Skill>();
         skillInventory.SetSkillHolder(this.transform);
         skillInventory.GenerateSlotsInfo(slots, cards);
         indexCombinedStream = Observable.Empty<int>();
         skillCombinedStream = Observable.Empty<Skill>();
         slots[0].Set(currentClassData.GetWeapon().BaseSkill.Prefab.GetComponent<Skill>());
+        chosenSkill.Add(currentClassData.GetWeapon().BaseSkill.Prefab.GetComponent<Skill>());
     }
 
     private void Start()
@@ -59,6 +62,7 @@ public class SkillSystem : MonoBehaviour
             if (slots[i].CurrentSkill == null)
             {
                 slots[i].Set(skill);
+                chosenSkill.Add(skill);
                 if (i == 5)
                     skillInventory.Full();
                 break;

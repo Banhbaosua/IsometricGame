@@ -21,7 +21,6 @@ public class PulseShot : Skill, ICastOnPlayer
 
     protected override void SkillBehavior()
     {
-        base.SkillBehavior();
         GameObject pulseShot = Instantiate(pulseCore.gameObject, ObjectSpawnPos, Quaternion.identity, this.transform);
         GameObject pulseExplodeGO = Instantiate(pulseExplode.gameObject, pulseShot.transform.position, Quaternion.identity, this.transform);
         

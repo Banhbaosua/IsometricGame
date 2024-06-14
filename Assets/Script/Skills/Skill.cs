@@ -66,10 +66,7 @@ public abstract class Skill : MonoBehaviour
 
     }
 
-    protected virtual void SkillBehavior()
-    {
-
-    }
+    protected abstract void SkillBehavior();
 
     protected virtual void Initiate()
     {

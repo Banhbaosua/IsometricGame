@@ -33,7 +33,7 @@ public class BlackHole : Skill, IArea, IDuration, ICastOnArea
 
     protected override void SkillBehavior()
     {
-        base.SkillBehavior();
+        throw new System.NotImplementedException();
     }
 
     // Start is called before the first frame update

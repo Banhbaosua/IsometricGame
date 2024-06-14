@@ -22,7 +22,7 @@ public class Enemy
     public StateEvent OnHit;
 }
 [RequireComponent(typeof(HealthController))]
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IEffectable
 {
     StateMachine<EnemyState, Enemy> enemyFSM;
 
@@ -41,7 +41,9 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] float xp;
 
-
+    private float moveSpeed;
+    private ReactiveProperty<float> modifiedSpeed;
+    private float speed => moveSpeed + modifiedSpeed.Value;
     private Subject<Unit> onEnemeDeath;
     private Subject<Unit> onEnemySpawn;
     public IObservable<Unit> OnEnemyDeath => onEnemeDeath;
@@ -63,6 +65,8 @@ public class EnemyController : MonoBehaviour
             SetTarget();
             Initiate();
         });
+
+        
         Initiate();
     }
     private void Start()
@@ -85,6 +89,9 @@ public class EnemyController : MonoBehaviour
         healthController.OnDeath += enemyFSM.Driver.OnDeath.Invoke;
 
         navMeshAgent = GetComponent<NavMeshAgent>();
+        moveSpeed = navMeshAgent.speed;
+        modifiedSpeed = new ReactiveProperty<float>();
+        modifiedSpeed.Subscribe(_ => navMeshAgent.speed = speed);
     }
 
     void chase_OnUpdate()
@@ -211,5 +218,10 @@ public class EnemyController : MonoBehaviour
         var pos = new Vector3(this.transform.position.x, 0.5f, this.transform.position.z);
         XpGem.transform.position = pos;
         XpGem.SetActive(true);
+    }
+
+    public void SetModifiedSpeed(float speed)
+    {
+        modifiedSpeed.Value = navMeshAgent.speed * (speed / 100);
     }
 }

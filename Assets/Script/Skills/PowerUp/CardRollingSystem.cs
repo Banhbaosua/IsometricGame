@@ -13,11 +13,13 @@ public class CardRollingSystem : MonoBehaviour
     [SerializeField] CurrentClassData currentClassData;
     [SerializeField] Transform cardsHolder;
     private XpSystem xpSystem;
+    private SkillSystem skillSystem;
     private IDisposable levelUpSubscription;
     private List<int> rolledPU;
-    private List<int> rolledSkill;
-    private List<int> chosenSkill;
+    private List<Skill> rolledSkill;
+    private List<Skill> ChosenSkill => skillSystem.ChosenSkill;
     private CompositeDisposable disposables;
+
     void EnableCards(Unit _)
     {
         cardsHolder.gameObject.SetActive(true);
@@ -25,23 +27,22 @@ public class CardRollingSystem : MonoBehaviour
         rolledPU.Clear();
         rolledSkill.Clear();
         RollAllCard();
-        Debug.Log(chosenSkill.Count);
     }
 
-    int RollSkill(SkillCard skillCard)
+    Skill RollSkill(SkillCard skillCard)
     {
         int rd = UnityEngine.Random.Range(0, skillTable.List.Count-1);
-        while (rolledSkill.Contains(rd) || chosenSkill.Contains(rd))
+        var skill = skillTable.List[rd];
+        int maxRolls = 10;
+        while (rolledSkill.Contains(skill) || ChosenSkill.Contains(skill) && maxRolls-- > 0)
         {
             rd = UnityEngine.Random.Range(0, skillTable.List.Count-1);
+            skill = skillTable.List[rd];
         }
-        rolledSkill.Add(rd);
+        rolledSkill.Add(skill);
         
-
-        Skill skill = skillTable.List[rd];
         skillCard.Set(null, skill);
-
-        return rd;
+        return skill;
     }
 
     void RollPowerUP(SkillCard skillCard) 
@@ -89,17 +90,19 @@ public class CardRollingSystem : MonoBehaviour
         }
         else
             Debug.LogError("XpSystem not found in the scene.");
+
+        skillSystem = FindObjectOfType<SkillSystem>();
+        if (xpSystem == null)
+        {
+            Debug.LogError("SkillSystem not found in the scene.");
+        }
     }
 
     private void Awake()
     {
         rolledPU = new();
         rolledSkill = new();
-        chosenSkill = new();
-        disposables = new CompositeDisposable();
         puTable.LoadSkillsFromResources();
-        int baseSkilIndex = skillTable.List.IndexOf(currentClassData.GetWeapon().BaseSkill.Prefab.GetComponent<Skill>());
-        chosenSkill.Add(baseSkilIndex);
     }
 
     private void OnDestroy()

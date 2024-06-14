@@ -27,8 +27,6 @@ public class DarkDraw : Skill, IArea, ICastOnPlayer
 
     protected override void SkillBehavior()
     {
-        base.SkillBehavior();
-
         var skillObj = Instantiate(drawEffect, this.transform);
         skillObj.SetActive(true);
 

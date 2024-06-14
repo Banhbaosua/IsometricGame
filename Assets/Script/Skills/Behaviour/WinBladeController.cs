@@ -27,7 +27,6 @@ public class WinBladeController : Skill, ICastOnPlayer
 
     protected override void SkillBehavior()
     {
-        base.SkillBehavior();
         GameObject windBlade = Instantiate(wbPref, objectSpawnPos, Quaternion.identity, this.transform);
         var timer = Observable.Interval(TimeSpan.FromSeconds(4))
                                 .Subscribe(_ => Destroy(windBlade)).AddTo(windBlade);
@@ -41,7 +40,7 @@ public class WinBladeController : Skill, ICastOnPlayer
             .Subscribe(x =>
             {
                 windBladeMove.Dispose();
-                DealDamage(x.GetComponent<HealthController>());
+                DealDamage(x.transform.GetComponent<HealthController>());
                 var nearest = NearestEnemyList(chainTimes, x.transform);
                 if (nearest.Length > 0)
                     FlyTowardNearest(windBlade.transform, nearest);

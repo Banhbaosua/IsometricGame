@@ -48,8 +48,6 @@ public class SunBurstController : Skill, IDuration, IArea,ICastOnArea
 
     protected override void SkillBehavior()
     {
-        base.SkillBehavior();
-
         StartCoroutine(FindEnemy());
     }
 
@@ -62,6 +60,7 @@ public class SunBurstController : Skill, IDuration, IArea,ICastOnArea
                 yield return new WaitForFixedUpdate();
                 if (enemies.Length == 0)
                     continue;
+
 
                 var random = Random.Range(0, enemies.Length - 1);
 

@@ -14,11 +14,6 @@ public class DimensionCutter : Skill, IArea, IFollowCursor, ICastOnPlayer
 
     public Transform Player => player;
 
-    protected override void DealDamage(HealthController healthCtl)
-    {
-        base.DealDamage(healthCtl);
-    }
-
     protected override void Initiate()
     {
         base.Initiate();
@@ -28,7 +23,6 @@ public class DimensionCutter : Skill, IArea, IFollowCursor, ICastOnPlayer
 
     protected override void SkillBehavior()
     {
-        base.SkillBehavior();
         objectMaker.transform.position = player.transform.position;
         objectMaker.transform.forward = player.transform.forward;
         objectMaker.m_makeCount++;
@@ -36,8 +30,11 @@ public class DimensionCutter : Skill, IArea, IFollowCursor, ICastOnPlayer
 
     private void OnTriggerEnter(Collider other)
     {
-        objectMove.HitObj(other.transform);
-        DealDamage(other.GetComponent<HealthController>());
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        { 
+            objectMove.HitObj(other.transform);
+            DealDamage(other.transform.GetComponent<HealthController>());
+        }
     }
 
     protected override void Start()
