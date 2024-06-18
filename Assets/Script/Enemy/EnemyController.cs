@@ -10,6 +10,7 @@ using System;
 
 public enum EnemyState
 {
+    idle,
     chase,
     attack,
     death,
@@ -92,6 +93,21 @@ public class EnemyController : MonoBehaviour, IEffectable
         moveSpeed = navMeshAgent.speed;
         modifiedSpeed = new ReactiveProperty<float>();
         modifiedSpeed.Subscribe(_ => navMeshAgent.speed = speed);
+    }
+
+    void idle_Enter()
+    {
+        Debug.Log("idle enter");
+    }
+    void idle_OnUpdate()
+    {
+        Debug.Log("idle");
+        animator.SetFloat("Forward", 0);
+    }
+
+    void idle_Exit()
+    {
+        EnemyMovementHandle(false);
     }
 
     void chase_OnUpdate()
@@ -223,5 +239,19 @@ public class EnemyController : MonoBehaviour, IEffectable
     public void SetModifiedSpeed(float speed)
     {
         modifiedSpeed.Value = navMeshAgent.speed * (speed / 100);
+    }
+
+    public void Stun(bool stun)
+    {
+        if (stun)
+        {
+            enemyFSM.ChangeState(EnemyState.idle);
+            navMeshAgent.isStopped =true;
+        }
+        else
+        {
+            enemyFSM.ChangeState(EnemyState.chase);
+            navMeshAgent.isStopped = false;
+        }
     }
 }

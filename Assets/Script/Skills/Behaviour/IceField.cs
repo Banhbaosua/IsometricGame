@@ -27,7 +27,7 @@ public class IceField : Skill, ICastOnArea
             var enemies = Physics.OverlapSphere(player.position, castArea.radius, LayerMask.GetMask("Enemy"));
             if (enemies.Length > 0)
             {
-                var random = UnityEngine.Random.Range(0, enemies.Length);
+                var random = UnityEngine.Random.Range(0, enemies.Length-1);
                 var pos = new Vector3(enemies[random].transform.position.x, 0.01f, enemies[random].transform.position.z);
                 GameObject iceField = Instantiate(iceFieldGO, pos, Quaternion.identity, null);
                 currentEntity++;

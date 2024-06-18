@@ -33,8 +33,7 @@ public class CardRollingSystem : MonoBehaviour
     {
         int rd = UnityEngine.Random.Range(0, skillTable.List.Count-1);
         var skill = skillTable.List[rd];
-        int maxRolls = 10;
-        while (rolledSkill.Contains(skill) || ChosenSkill.Contains(skill) && maxRolls-- > 0)
+        while (rolledSkill.Contains(skill) || ChosenSkill.Contains(skill) && (skillTable.List.Count - ChosenSkill.Count) >= 3)
         {
             rd = UnityEngine.Random.Range(0, skillTable.List.Count-1);
             skill = skillTable.List[rd];

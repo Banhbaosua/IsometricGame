@@ -16,13 +16,12 @@ public class StatusEffectComponent : MonoBehaviour
     }
     public void ApplyStatus(IEffectable obj)
     {
-        foreach (var effect in Effects) 
+        foreach (var effect in Effects)
         {
             effect.Apply(obj);
         }
     }
     private void Update()
     {
-        Debug.Log(effects[0].EffectState.Count);
     }
 }
