@@ -8,6 +8,7 @@ public class EnemyCurveProjectile : MonoBehaviour
     [SerializeField] EnemyController enemyController;
     [SerializeField] Transform launchPoint;
     [SerializeField] GameObject Projectile;
+    [SerializeField] Transform rangeCircle;
     
     private Transform target;
     public float firingAngle = 45.0f;
@@ -24,10 +25,20 @@ public class EnemyCurveProjectile : MonoBehaviour
     void LaunchProjectile()
     {
         var projectile = Instantiate(Projectile,launchPoint.position,Quaternion.identity,null);
+        
         StartCoroutine(SimulateProjectile(projectile.transform));
     }
     IEnumerator SimulateProjectile(Transform proj)
     {
+        proj.gameObject.SetActive(true);
+        var circle = Instantiate(rangeCircle.gameObject, target.position, Quaternion.Euler(90,0,0), null);
+
+        var circleFill = circle.transform.GetChild(0);
+        var circleFillMaxScale = circleFill.localScale;
+
+        circle.SetActive(true);
+        proj.gameObject.SetActive(true);
+
         // Calculate distance to target
         float target_Distance = Vector3.Distance(proj.position, target.position);
 
@@ -45,16 +56,24 @@ public class EnemyCurveProjectile : MonoBehaviour
         proj.rotation = Quaternion.LookRotation(target.position - proj.position);
 
         float elapse_time = 0;
+        circleFill.localScale = Vector3.zero;
 
         while (elapse_time < flightDuration)
         {
             proj.Translate(0, (Vy - (gravity * elapse_time)) * Time.deltaTime, Vx * Time.deltaTime);
 
             elapse_time += Time.deltaTime;
-
+            circleFill.localScale = circleFillMaxScale * (elapse_time / flightDuration);
+            if (elapse_time >= flightDuration)
+            {
+                Destroy(proj.gameObject);
+                Destroy(circle.gameObject);
+            }
             yield return null;
         }
     }
+
+
 }
 
 

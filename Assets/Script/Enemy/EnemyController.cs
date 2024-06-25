@@ -187,6 +187,7 @@ public class EnemyController : MonoBehaviour, IEffectable
         {
             animator.SetTrigger("Attack");
             animator.SetTrigger("ExecuteAttack");
+            yield return new WaitForSeconds(0.5f);
             onAttack.OnNext(Unit.Default);
             yield return new WaitForSeconds(attackCoolDown);
         }
