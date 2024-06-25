@@ -32,7 +32,6 @@ public class EnemyController : MonoBehaviour, IEffectable
     private NavMeshAgent navMeshAgent;
     private Vector3 agentVel;
 
-    [SerializeField] float chaseSpeed;
     [SerializeField] float attackDistance;
     [SerializeField] Animator animator;
     [SerializeField] float timeBeforAttackExec;
@@ -45,15 +44,18 @@ public class EnemyController : MonoBehaviour, IEffectable
     private float moveSpeed;
     private ReactiveProperty<float> modifiedSpeed;
     private float speed => moveSpeed + modifiedSpeed.Value;
-    private Subject<Unit> onEnemeDeath;
+    private Subject<Unit> onEnemyDeath;
     private Subject<Unit> onEnemySpawn;
-    public IObservable<Unit> OnEnemyDeath => onEnemeDeath;
+    private Subject<Unit> onAttack;
+    public IObservable<Unit> OnEnemyDeath => onEnemyDeath;
     public IObservable<Unit> OnEnemySpawn => onEnemySpawn;
+    public IObservable<Unit> OnAttack => onAttack;
     public float Xp => xp;
     private void Awake()
     {
-        onEnemeDeath = new Subject<Unit>();
+        onEnemyDeath = new Subject<Unit>();
         onEnemySpawn = new Subject<Unit>();
+        onAttack = new Subject<Unit>();
         OnEnemyDeath.Subscribe(_ => ResetStat());
         OnEnemyDeath.Subscribe(_ =>
         {
@@ -157,7 +159,7 @@ public class EnemyController : MonoBehaviour, IEffectable
         animator.SetFloat("Forward", 0);
         animator.SetTrigger("Death");
         animator.SetFloat("RandomDeath", UnityEngine.Random.Range(0, 2));
-        onEnemeDeath.OnNext(Unit.Default);
+        onEnemyDeath.OnNext(Unit.Default);
     }
 
     void EnemyMovementHandle(bool isAttacking)
@@ -185,6 +187,7 @@ public class EnemyController : MonoBehaviour, IEffectable
         {
             animator.SetTrigger("Attack");
             animator.SetTrigger("ExecuteAttack");
+            onAttack.OnNext(Unit.Default);
             yield return new WaitForSeconds(attackCoolDown);
         }
     }
