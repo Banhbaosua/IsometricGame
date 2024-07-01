@@ -8,8 +8,9 @@ public class HealthController : MonoBehaviour
     [SerializeField] float maxHealth;
     public event Action<bool> OnDeath;
     private float currentHealth;
+    private float modifiedHealth;
     public float CurrentHealth => currentHealth;
-    public float MaxHealth => maxHealth;
+    public float MaxHealth => maxHealth + maxHealth*modifiedHealth;
     public HealthController(float maxHealth) 
     { 
         this.maxHealth = maxHealth;
@@ -20,10 +21,9 @@ public class HealthController : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        currentHealth = MaxHealth;
     }
 
     public void TakeDamage(float damage)
@@ -38,13 +38,13 @@ public class HealthController : MonoBehaviour
         }
     }
 
-    public void MaxHealthModify(float value)
+    public void HealthMultiModify(float value)
     {
-        maxHealth += value;
+        modifiedHealth += value;
     }
 
-    public void MaxHealthModify()
+    public void ResetHealth()
     {
-        currentHealth = maxHealth;
+        currentHealth = MaxHealth;
     }
 }

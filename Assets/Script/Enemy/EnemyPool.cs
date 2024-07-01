@@ -115,6 +115,7 @@ namespace SpawnerSystem
             foreach (EnemyPoolData data in poolData.List)
             {
                 var enemyList = new Queue<GameObject>();
+                var healthScriptList = new List<HealthController>();
                 var objParent = new GameObject(data.MonsterName);
                 objParent.transform.parent = this.transform;
 
@@ -131,20 +132,28 @@ namespace SpawnerSystem
                             controller.SpawnXpGem(DequeueXpGem(controller.Xp));
                             ReturnEnemy(enemy);
                         });
-
+                    healthScriptList.Add(enemy.GetComponentInChildren<HealthController>());
                     enemyList.Enqueue(enemy);
                 }
 
-                enemies.Add(data.MonsterName, new PoolActiveData(0, enemyList, data));
+                enemies.Add(data.MonsterName, new PoolActiveData(
+                    0, 
+                    enemyList,
+                    data,
+                    healthScriptList));
                 requiredExpGemAmount += data.MaxActiveUnit;
             }
             GenerateXpGem(requiredExpGemAmount, gemPoolParent.transform);
 
             foreach (KeyValuePair<string, PoolActiveData> keyValuePair in enemies)
             {
-                var enemySpawnStream = Observable.Interval(TimeSpan.FromSeconds(keyValuePair.Value.data.SpawnDelay))
+                var data = keyValuePair.Value.data;
+
+                StartCoroutine(EnemyPoolData.WavesTrigger(keyValuePair.Value));
+
+                var enemySpawnStream = Observable.Interval(TimeSpan.FromSeconds(data.SpawnDelay))
                     .Select(actives => keyValuePair.Value.currentActiveMonster)
-                    .Where(actives => actives < keyValuePair.Value.data.MaxActiveUnit)
+                    .Where(actives => actives < data.MaxActiveUnit)
                     .Subscribe(_ => onEnemySpawnReQuest.OnNext(keyValuePair.Key))
                     .AddTo(disposables);
             }
@@ -163,17 +172,19 @@ namespace SpawnerSystem
         }
     }
 
-    class PoolActiveData
+    public class PoolActiveData
     {
         public EnemyPoolData data;
         public int currentActiveMonster;
         public Queue<GameObject> enemiesList;
+        public List<HealthController> healthScriptList;
         
-        public PoolActiveData(int currentActiveMonster, Queue<GameObject> queue, EnemyPoolData data)
+        public PoolActiveData(int currentActiveMonster, Queue<GameObject> queue, EnemyPoolData data, List<HealthController> healthList)
         {
             this.currentActiveMonster = currentActiveMonster;
             enemiesList = queue;
             this.data = data;
+            healthScriptList = healthList;
         }
     }
     

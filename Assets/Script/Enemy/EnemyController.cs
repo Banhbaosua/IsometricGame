@@ -47,6 +47,8 @@ public class EnemyController : MonoBehaviour, IEffectable
     private Subject<Unit> onEnemyDeath;
     private Subject<Unit> onEnemySpawn;
     private Subject<Unit> onAttack;
+
+    private float currentCooldown;
     public IObservable<Unit> OnEnemyDeath => onEnemyDeath;
     public IObservable<Unit> OnEnemySpawn => onEnemySpawn;
     public IObservable<Unit> OnAttack => onAttack;
@@ -88,7 +90,7 @@ public class EnemyController : MonoBehaviour, IEffectable
         enemyFSM.ChangeState(EnemyState.chase);
 
         healthController = GetComponent<HealthController>();
-        healthController.MaxHealthModify();
+        healthController.ResetHealth();
         healthController.OnDeath += enemyFSM.Driver.OnDeath.Invoke;
 
         navMeshAgent = GetComponent<NavMeshAgent>();

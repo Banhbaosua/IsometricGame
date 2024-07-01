@@ -32,6 +32,7 @@ public class TabButton : MonoBehaviour, IPointerClickHandler
 
     public void EnableTabButton(Component sender, object data)
     {
+        Debug.Log(sender);
         if (sender != this)
         {
             _btnImg.sprite = _unselectedSprite;
