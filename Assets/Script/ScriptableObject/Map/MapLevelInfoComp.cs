@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class MapLevelInfoComp : MonoBehaviour
 {
-    [SerializeField] MapLevelInfo mapLevelInfo;
+    [SerializeField] CurrentMapLevelInfo mapLevelInfo;
 }
