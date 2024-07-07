@@ -54,6 +54,7 @@ public class Stat
     private bool isDirty = true;
     private readonly List<AddictiveStat> addictiveStats;
     public List<AddictiveStat> AddictiveStats => addictiveStats;
+    public StatType StatType => Type;
     public float Value
     {
         get 

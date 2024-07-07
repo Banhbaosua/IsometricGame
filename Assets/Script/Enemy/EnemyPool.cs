@@ -55,6 +55,7 @@ namespace SpawnerSystem
         private void Start()
         {
             InitiatePool();
+            Debug.Log(Application.persistentDataPath);
         }
 
         public void SpawnEnemy(string monsterName)
