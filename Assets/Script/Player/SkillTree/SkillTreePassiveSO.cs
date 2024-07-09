@@ -12,11 +12,24 @@ public class SkillTreePassiveSO : ScriptableObject
     [SerializeField] CharacterData characterData;
     [SerializeField] Sprite icon;
     [SerializeField] int baseTier;
+    [TextArea]
+    [SerializeField] string description;
 
     [SerializeField,HideInInspector] private int currentTier = default;
     public int CurrentTier => currentTier;
-    public SkillTreePassiveData Data => passives[currentTier];
+    public SkillTreePassiveData NextTierData    =>  passives[currentTier];
+
     public Sprite Icon => icon;
+    public string Description 
+    {  
+        get 
+        {
+            if (currentTier == 0)
+                return description;
+            else
+                return description + passives[currentTier-1].Value.ToString();
+        } 
+    }
 
     private void OnEnable()
     {
@@ -25,25 +38,24 @@ public class SkillTreePassiveSO : ScriptableObject
     public void UnlockTier()
     {
         currentTier++;
-
         ApplyPassive();
 
-        SaveUtility.SaveToJSON(this.name, Data);
+        SaveUtility.SaveToJSON(this.name, passives[currentTier-1]);
     }
 
     void ApplyPassive()
     {
-        var passiveStat = passives[currentTier];
+        var passiveStat = passives[currentTier-1];
         characterData.StatList[passiveStat.StatType].RemoveAllAddictiveStats(this);
         characterData.StatList[passiveStat.StatType].AddAddictiveStats(passiveStat.Value, this);
-        Debug.Log(characterData.StatList[passiveStat.StatType].Value);
     }
     public void Initiate()
     {
-        if(SaveUtility.LoadFromJSON<SkillTreePassiveData>(this.name) != default)
+        if (SaveUtility.LoadFromJSON<SkillTreePassiveData>(this.name) != null)
+        {
             currentTier = SaveUtility.LoadFromJSON<SkillTreePassiveData>(this.name).Tier;
-
-        if (currentTier != default)
+        }
+        if (currentTier > 0)
             ApplyPassive();
     }
 }

@@ -17,12 +17,15 @@ public class TabButton : MonoBehaviour, IPointerClickHandler
 
     private void Awake()
     {
-        if (tabType == TabType.Fight)
-            _content.SetActive(true);
-        else
-            _content.SetActive(false);
 
         _btnImg = GetComponent<Image>();
+        if (tabType == TabType.Fight)
+        {
+            _content.SetActive(true);
+            _btnImg.sprite = _selectedSprite;
+        }
+        else
+            _content.SetActive(false);
         
     }
     void Start()

@@ -20,6 +20,7 @@ public class CharacterClassData : ScriptableObject
     public Sprite Icon => _icon;
     public int Level => level;
     public GameObject Prefab => _prefab;
+    public List<AddictiveStat> BonusStatList => bonusStat;
 
     private void OnEnable()
     {

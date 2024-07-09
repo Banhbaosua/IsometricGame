@@ -12,6 +12,7 @@ public class SkillTreePassiveComponent : MonoBehaviour
     [SerializeField] GameEvent passiveChooseEvent;
     [SerializeField] Image image;
     [SerializeField] Transform yellowConnectionLine;
+    public SkillTreePassiveSO SkillTreeSO => skillTreeSO;
     private CompositeDisposable disposables = new();
 
     private void OnEnable()
@@ -20,12 +21,17 @@ public class SkillTreePassiveComponent : MonoBehaviour
         image.OnPointerClickAsObservable()
             .Subscribe(_ =>
             {
-                passiveChooseEvent.Notify(this, skillTreeSO);
+                passiveChooseEvent.Notify(this, this);
             })
             .AddTo(disposables);
             
         yellowConnectionLine.gameObject.SetActive(skillTreeSO.CurrentTier != default);
 
+    }
+
+    public void EnableYellowLine()
+    {
+        yellowConnectionLine.gameObject.SetActive(true);
     }
 
     private void OnDisable()

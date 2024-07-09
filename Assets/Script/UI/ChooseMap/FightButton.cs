@@ -7,9 +7,10 @@ using UnityEngine.SceneManagement;
 public class FightButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] CurrentMapLevelInfo currentMapLevelInfo;
+    [SerializeField] LoadingAsync loadingAsync;
     public void OnPointerClick(PointerEventData eventData)
     {
-        SceneManager.LoadScene(currentMapLevelInfo.SelectedScene.name, LoadSceneMode.Single);
+        loadingAsync.LoadScene(currentMapLevelInfo.SelectedScene);
     }
 
     // Start is called before the first frame update

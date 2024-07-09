@@ -39,7 +39,6 @@ namespace SpawnerSystem
                 for(int i = 0; i < activeData.healthScriptList.Count;i++) 
                 {
                     activeData.healthScriptList[i].HealthMultiModify(wave.HealthModify);
-                    Debug.Log(activeData.healthScriptList[i].MaxHealth);
                 }
             }
             currentWave++;

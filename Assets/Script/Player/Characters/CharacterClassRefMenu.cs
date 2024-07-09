@@ -8,13 +8,24 @@ public class CharacterClassRefMenu : MonoBehaviour
     [SerializeField] private GameObject model;
     [SerializeField] private Transform _mainWeaponHolder;
     [SerializeField] private Transform _offHandWeaponHolder;
-    private void Awake()
+    //private void Awake()
+    //{
+    //    if (_class != null)
+    //    {
+    //        if (_class.isSelected)
+    //            model.SetActive(true);
+    //        else 
+    //            model.SetActive(false);
+    //    }
+    //}
+
+    private void OnEnable()
     {
         if (_class != null)
         {
             if (_class.isSelected)
                 model.SetActive(true);
-            else 
+            else
                 model.SetActive(false);
         }
     }

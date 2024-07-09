@@ -11,11 +11,17 @@ public class MapTier : MonoBehaviour, IPointerClickHandler
     [SerializeField] Image lockIcon;
     [SerializeField] SpawnerData levelData;
     [SerializeField] CurrentMapLevelInfo mapLevelInfo;
+    [SerializeField] Image frame;
+    [SerializeField] Sprite hightlightFrame;
+    [SerializeField] Sprite normalFrame;
+    [SerializeField] GameEvent onLevelTierChoose;
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if(data.IsUnlocked)
             mapLevelInfo.SelectLevel(levelData);
+        onLevelTierChoose.Notify(this, this);
+        Debug.Log("click");
     }
 
     private void OnEnable()
@@ -37,6 +43,16 @@ public class MapTier : MonoBehaviour, IPointerClickHandler
     {
         if(SaveUtility.LoadFromJSON<MapTierData>(mapLevelInfo.SelectedScene.name) != null)
             data = SaveUtility.LoadFromJSON<MapTierData>(mapLevelInfo.SelectedScene.name);
+    }
+
+    public void Highlight(Component sender, object data)
+    {
+        if(sender == this)
+        {
+            frame.sprite = hightlightFrame;
+        }
+        else
+            frame.sprite = normalFrame;
     }
 }
 

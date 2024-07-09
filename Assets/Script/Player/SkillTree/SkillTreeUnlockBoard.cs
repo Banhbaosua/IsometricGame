@@ -6,24 +6,30 @@ using UnityEngine.UI;
 public class SkillTreeUnlockBoard : MonoBehaviour
 {
     [SerializeField] Text cost;
+    [SerializeField] Text description;
     [SerializeField] Image currencyIcon;
     [SerializeField] Button unlockBtn;
     [SerializeField] CurrencyInventory currencyInventory;
     [SerializeField] Image passiveIcon;
-    private SkillTreePassiveSO passiveData;
+    private SkillTreePassiveComponent passiveData;
 
     public void Set(Component sender, object data)
     {
-        passiveData = data as SkillTreePassiveSO;
-        var currName = passiveData.Data.Requirements.CurrencyType.ToString() + " Soulstones";
+        passiveData = data as SkillTreePassiveComponent;
+        var currName = passiveData.SkillTreeSO.NextTierData.Requirements.CurrencyType.ToString() + " Soulstones";
         var curr = currencyInventory.dictFromList[currName];
 
         currencyIcon.sprite = curr.Icon;
-        passiveIcon.sprite = passiveData.Icon;
+        currencyIcon.gameObject.SetActive(true);
+        passiveIcon.sprite = passiveData.SkillTreeSO.Icon;
 
-        cost.text = passiveData.Data.Requirements.CurrencyRequire.ToString();
+        cost.text = passiveData.SkillTreeSO.NextTierData.Requirements.CurrencyRequire.ToString();
+        cost.gameObject.SetActive(true);
 
-        var passive = passiveData.Data;
+        description.text = passiveData.SkillTreeSO.Description;
+        description.gameObject.SetActive(true);
+
+        var passive = passiveData.SkillTreeSO.NextTierData;
         if (passive.Requirements.CurrencyRequire < currencyInventory.dictFromList[currName].Amount)
         { 
             unlockBtn.interactable = true;
@@ -41,7 +47,8 @@ public class SkillTreeUnlockBoard : MonoBehaviour
     {
         if (passiveData != null)
         {
-            passiveData.UnlockTier();
+            passiveData.SkillTreeSO.UnlockTier();
+            passiveData.EnableYellowLine();
             Set(this, passiveData);
         }
     }
