@@ -40,24 +40,25 @@ public class EnemyController : MonoBehaviour, IEffectable
     [SerializeField] float attackDamage;
 
     [SerializeField] float xp;
+    private bool attackAble;
 
     private float moveSpeed;
     private ReactiveProperty<float> modifiedSpeed;
     private float speed => moveSpeed + modifiedSpeed.Value;
     private Subject<Unit> onEnemyDeath;
     private Subject<Unit> onEnemySpawn;
-    private Subject<Unit> onAttack;
+    private Subject<float> onAttack;
 
     private float currentCooldown;
     public IObservable<Unit> OnEnemyDeath => onEnemyDeath;
     public IObservable<Unit> OnEnemySpawn => onEnemySpawn;
-    public IObservable<Unit> OnAttack => onAttack;
+    public IObservable<float> OnAttack => onAttack;
     public float Xp => xp;
     private void Awake()
     {
         onEnemyDeath = new Subject<Unit>();
         onEnemySpawn = new Subject<Unit>();
-        onAttack = new Subject<Unit>();
+        onAttack = new Subject<float>();
         OnEnemyDeath.Subscribe(_ => ResetStat());
         OnEnemyDeath.Subscribe(_ =>
         {
@@ -82,6 +83,14 @@ public class EnemyController : MonoBehaviour, IEffectable
     void Update()
     {
         enemyFSM.Driver.OnUpdate.Invoke();
+        if (currentCooldown < attackCoolDown && !attackAble)
+        {
+            currentCooldown += Time.deltaTime;
+        }
+        if (currentCooldown > attackCoolDown)
+        {
+            attackAble = true;
+        }
     }
 
     void Initiate()
@@ -97,6 +106,8 @@ public class EnemyController : MonoBehaviour, IEffectable
         moveSpeed = navMeshAgent.speed;
         modifiedSpeed = new ReactiveProperty<float>();
         modifiedSpeed.Subscribe(_ => navMeshAgent.speed = speed);
+
+        attackAble = true;
     }
 
     void idle_Enter()
@@ -185,12 +196,14 @@ public class EnemyController : MonoBehaviour, IEffectable
 
     IEnumerator EnemyAttackHandle()
     {
-        while (true)
+        while (attackAble)
         {
             animator.SetTrigger("Attack");
             animator.SetTrigger("ExecuteAttack");
             yield return new WaitForSeconds(0.5f);
-            onAttack.OnNext(Unit.Default);
+            onAttack.OnNext(attackDamage);
+            attackAble = false;
+            currentCooldown = 0;
             yield return new WaitForSeconds(attackCoolDown);
         }
     }

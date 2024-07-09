@@ -19,16 +19,16 @@ public class EnemyCurveProjectile : MonoBehaviour
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        enemyController.OnAttack.Subscribe(_ => LaunchProjectile());
+        enemyController.OnAttack.Subscribe(x => LaunchProjectile(x));
     }
 
-    void LaunchProjectile()
+    void LaunchProjectile(float damage)
     {
         var projectile = Instantiate(Projectile,launchPoint.position,Quaternion.identity,null);
         
-        StartCoroutine(SimulateProjectile(projectile.transform));
+        StartCoroutine(SimulateProjectile(projectile.transform,damage));
     }
-    IEnumerator SimulateProjectile(Transform proj)
+    IEnumerator SimulateProjectile(Transform proj,float damage)
     {
         proj.gameObject.SetActive(true);
         var circle = Instantiate(rangeCircle.gameObject, target.position, Quaternion.Euler(90,0,0), null);
@@ -66,6 +66,9 @@ public class EnemyCurveProjectile : MonoBehaviour
             circleFill.localScale = circleFillMaxScale * (elapse_time / flightDuration);
             if (elapse_time >= flightDuration)
             {
+                var hit = Physics.OverlapSphere(proj.position, 2.2f, LayerMask.GetMask("Player"));
+                if(hit.Length>0)
+                    hit[0].GetComponent<CharacterDataComponent>().CharacterData.HealthController.TakeDamage(damage);
                 Destroy(proj.gameObject);
                 Destroy(circle.gameObject);
             }

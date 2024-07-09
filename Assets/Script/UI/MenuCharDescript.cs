@@ -22,7 +22,7 @@ public class MenuCharDescript : MonoBehaviour
         for(int i =0; i < character.BonusStatList.Count;i++) 
         {
             var stat = character.BonusStatList[i];
-            description[i].text = stat.Type.ToString() +" "+stat.Value.ToString();
+            description[i].text = stat.Type.ToString() +" + "+stat.Value.ToString();
             description[i].gameObject.SetActive(true);
         }
     }
