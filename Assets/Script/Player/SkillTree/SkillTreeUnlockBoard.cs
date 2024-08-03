@@ -49,6 +49,7 @@ public class SkillTreeUnlockBoard : MonoBehaviour
         {
             passiveData.SkillTreeSO.UnlockTier();
             passiveData.EnableYellowLine();
+            passiveData.EnableConnectedNode();
             Set(this, passiveData);
         }
     }

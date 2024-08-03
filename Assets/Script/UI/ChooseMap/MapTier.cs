@@ -16,33 +16,47 @@ public class MapTier : MonoBehaviour, IPointerClickHandler
     [SerializeField] Sprite normalFrame;
     [SerializeField] GameEvent onLevelTierChoose;
 
+    public MapTierData Data => data;
     public void OnPointerClick(PointerEventData eventData)
     {
         if(data.IsUnlocked)
-            mapLevelInfo.SelectLevel(levelData);
+            mapLevelInfo.SelectLevel((levelData,data));
         onLevelTierChoose.Notify(this, this);
-        Debug.Log("click");
     }
 
     private void OnEnable()
     {
         LoadData();
 
-        if (data.IsUnlocked)
-            lockIcon.gameObject.SetActive(false);
-        else
-            lockIcon.gameObject.SetActive(true);
+        UIUpdate();
     }
 
-    public void SaveData()
+    public void Unlock()
     {
-        SaveUtility.SaveToJSON(mapLevelInfo.SelectedScene.name + data.Tier, data);
+        data.Unlock();
+        UIUpdate();
+    }
+
+    public void UIUpdate()
+    {
+        if (data.IsUnlocked)
+        {
+            lockIcon.gameObject.SetActive(false);
+            frame.raycastTarget = true;
+        }
+        else
+        {
+            lockIcon.gameObject.SetActive(true);
+            frame.raycastTarget = false;
+        }
     }
 
     void LoadData()
     {
-        if(SaveUtility.LoadFromJSON<MapTierData>(mapLevelInfo.SelectedScene.name) != null)
-            data = SaveUtility.LoadFromJSON<MapTierData>(mapLevelInfo.SelectedScene.name);
+        if (data.Tier == 1 || data.Tier == 2)
+            data.Unlock();
+        if(SaveUtility.LoadFromJSON<MapTierData>(data.Tier.ToString()) != null)
+            data = SaveUtility.LoadFromJSON<MapTierData>(data.Tier.ToString());
     }
 
     public void Highlight(Component sender, object data)
@@ -62,7 +76,24 @@ public class MapTierData
     [SerializeField] int tier;
     [SerializeField] bool isUnlocked;
     [SerializeField] float progress;
+    [SerializeField] bool isCompleted;
     public int Tier => tier;
     public bool IsUnlocked => isUnlocked;
     public float Progress => progress;
+    public bool IsCompleted => isCompleted;
+
+    public void Unlock()
+    {
+        isUnlocked = true;
+    }
+
+    public void Complete()
+    {
+        isCompleted = true;
+    }
+
+    public void Save(string mapName)
+    {
+        SaveUtility.SaveToJSON(mapName+tier.ToString(), this);
+    }
 }

@@ -6,11 +6,16 @@ using UnityEngine.UI;
 public class TimeAlive : MonoBehaviour
 {
     [SerializeField] Text text;
-
+    private float currentTime;
+    private void Start()
+    {
+        currentTime = 0;
+    }
     private void Update()
     {
-        float min = Mathf.FloorToInt(Time.time / 60);
-        float sec = Mathf.FloorToInt(Time.time % 60);
+        currentTime += Time.deltaTime;
+        float min = Mathf.FloorToInt(currentTime / 60);
+        float sec = Mathf.FloorToInt(currentTime % 60);
         text.text = "Time alive: "+min.ToString() + ":" + sec.ToString("00");
     }
 }

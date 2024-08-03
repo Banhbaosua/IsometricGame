@@ -5,9 +5,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using MonsterLove.StateMachine;
 
+[RequireComponent(typeof(HealthController))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] CharacterController characterController;
+    [SerializeField] List<Transform> weapons;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] Animator animator;
     [SerializeField] float _speed;
@@ -24,22 +26,35 @@ public class PlayerController : MonoBehaviour
         fsm = new StateMachine<MovementStates,GameCharacter>(this);
         fsm.ChangeState(MovementStates.Move);
 
+        characterData.InjectHealthCtl(GetComponent<HealthController>());
         characterData.HealthController.OnDeath += fsm.Driver.OnDeath.Invoke;
-    }
-    void Start()
-    {
-        
     }
     void Update()
     {
         fsm.Driver.Update.Invoke();
     }
 
+    public void SetWeapon(int tier)
+    {
+        for(int i = 0; i< weapons.Count; i++) 
+        {
+            if (tier == i +1)
+            {
+                weapons[i].gameObject.SetActive(true);
+            }
+            else
+                weapons[i].gameObject.SetActive(false);
+        }
+    }
+
     void Move_Update()
     {
-        MoveCharacter();
-        SetCharacterAnimateBlend();
-        LookAtMouse();
+        if (Time.timeScale > 0)
+        {
+            MoveCharacter();
+            SetCharacterAnimateBlend();
+            LookAtMouse();
+        }
     }
 
     void Move_Enter()
@@ -64,13 +79,13 @@ public class PlayerController : MonoBehaviour
     {
         _velocity += _gravity * Time.deltaTime;
         _direction.y = _velocity;
-        characterController.Move(_direction * _speed * Time.deltaTime);
+        characterController.Move(_speed * Time.deltaTime * _direction);
     }
 
     private void SetCharacterAnimateBlend()
     {
-        animator.SetFloat("X", _direction.x,0.1f,Time.deltaTime);
-        animator.SetFloat("Y", _direction.z,0.1f, Time.deltaTime);
+        animator.SetFloat("SidewaysMovement", _direction.x,0.1f,Time.deltaTime);
+        animator.SetFloat("ForwardMovement", _direction.z,0.1f, Time.deltaTime);
     }
 
     private void LookAtMouse()
@@ -87,7 +102,7 @@ public class PlayerController : MonoBehaviour
         
         return hitPoint.point;
     }
-
+    //Player Input player event
     public void GetMoveDirection(InputAction.CallbackContext context)
     { 
         _direction = context.ReadValue<Vector3>().normalized;
@@ -97,6 +112,7 @@ public class PlayerController : MonoBehaviour
     public enum MovementStates
     {
         Move,
+        Pause,
         Dash,
         Death,
     }
@@ -107,6 +123,4 @@ public class PlayerController : MonoBehaviour
         public StateEvent<bool> OnDeath;
         public StateEvent<Collision> OnCollision;
     }
-
-
 }

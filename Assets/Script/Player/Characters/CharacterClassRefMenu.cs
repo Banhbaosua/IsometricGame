@@ -8,6 +8,7 @@ public class CharacterClassRefMenu : MonoBehaviour
     [SerializeField] private GameObject model;
     [SerializeField] private Transform _mainWeaponHolder;
     [SerializeField] private Transform _offHandWeaponHolder;
+    [SerializeField] CurrentClassData _currentClass;
     //private void Awake()
     //{
     //    if (_class != null)
@@ -27,6 +28,11 @@ public class CharacterClassRefMenu : MonoBehaviour
                 model.SetActive(true);
             else
                 model.SetActive(false);
+        }
+
+        if(_currentClass.GetCharacterClassData() != null)
+        {
+            EnableWeaponGO(null,_currentClass.GetWeapon());
         }
     }
 

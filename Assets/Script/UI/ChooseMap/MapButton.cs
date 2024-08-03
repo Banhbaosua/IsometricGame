@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MapButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] CurrentMapLevelInfo currentMapLevelInfo;
-    [SerializeField] Object map;
+    [SerializeField] string map;
     [SerializeField] Transform selectedFrame;
     [SerializeField] GameEvent onMapChoose;
 

@@ -15,9 +15,12 @@ namespace SpawnerSystem
     }
     public class EnemyPool : MonoBehaviour
     {
-        [SerializeField] SpawnerData poolData;
+        [SerializeField] CurrentMapLevelInfo currentMapLevelInfo;
+        private SpawnerData poolData => currentMapLevelInfo.LevelSetting;
         [SerializeField] GameObject expGemPref;
         [SerializeField] Transform gemPoolParent;
+
+        [SerializeField] ObjectiveManager objectiveManager;
 
         [Header("Map limit")]
         [SerializeField] Transform leftMap;
@@ -25,6 +28,7 @@ namespace SpawnerSystem
         [SerializeField] Transform topMap;
         [SerializeField] Transform bottomMap;
 
+        private Transform player;
         private Subject<string> onEnemySpawnReQuest;
         private Dictionary<string, PoolActiveData> enemies;
         private Queue<GameObject> expGemPool;
@@ -34,13 +38,18 @@ namespace SpawnerSystem
         private const float CAMERADISTANCE = 15f;
         private const int GEMAMOUNTIFINSUFFIC = 10;
         private Vector3[] outsideCamPos;
-
+        private Subject<Unit> onBossGemCollect;
+        public Subject<Unit> OnBossGemCollect => onBossGemCollect;
         CompositeDisposable disposables = new CompositeDisposable();
 
         private void Awake()
         {
+            
+            onBossGemCollect = new Subject<Unit>();
             onEnemySpawnReQuest = new Subject<string>();
-            OnEnemySpawnRequest.Subscribe(enemy => SpawnEnemy(enemy));
+            OnEnemySpawnRequest.Subscribe(enemy => SpawnEnemy(enemy)).AddTo(this);
+
+            
             enemies = new Dictionary<string, PoolActiveData>();
             expGemPool = new Queue<GameObject>();
 
@@ -55,6 +64,8 @@ namespace SpawnerSystem
         private void Start()
         {
             InitiatePool();
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+            objectiveManager.spawnBossResponse.Subscribe(_ => SpawnEnemy("boss")).AddTo(this);
         }
 
         public void SpawnEnemy(string monsterName)
@@ -66,7 +77,7 @@ namespace SpawnerSystem
             enemy.GetComponentInChildren<EnemyController>().Spawned();
             enemies[monsterName].currentActiveMonster++;
             enemy.transform.position = pos;
-            enemy.gameObject.SetActive(true);
+            enemy.SetActive(true);
         }
 
         Vector3 CheckMapLimit(Vector3 pos)
@@ -82,8 +93,13 @@ namespace SpawnerSystem
             return pos;
         }
 
-        public void ReturnEnemy(GameObject enemy) 
+        public void ReturnEnemy(GameObject enemy, bool isBoss = false) 
         {
+            if (isBoss)
+            {
+                enemies["boss"].enemiesList.Enqueue(enemy);
+                return;
+            }
             enemies[enemy.name].enemiesList.Enqueue(enemy);
         }
 
@@ -91,13 +107,25 @@ namespace SpawnerSystem
         {
             expGemPool.Enqueue(gem);
         }
-        GameObject DequeueXpGem(float xp)
+        GameObject DequeueXpGem(float xp, bool isBossGem = false)
         {
             if(expGemPool.Count > 0) 
             { 
                 var gem = expGemPool.Dequeue();
-                gem.GetComponent<Gem>().SetXp(xp);
-
+                gem.transform.localScale = new Vector3(1,1,1);
+                var gemComp = gem.GetComponent<Gem>();
+                gemComp.GetComponent<Gem>().SetXp(xp);
+                if (!isBossGem)
+                    OnBossGemCollect.Subscribe(_ =>
+                    { 
+                        if(gem.activeSelf)
+                            gemComp.FlyTowardPlayer(player); 
+                    }).AddTo(this);
+                else
+                {
+                    gemComp.OnGameCollect.Subscribe(_ => onBossGemCollect.OnNext(Unit.Default)).AddTo(this);
+                    gem.transform.localScale = gem.transform.localScale * 3;
+                }
                 return gem;
             }
             else
@@ -110,12 +138,15 @@ namespace SpawnerSystem
             }
         }
 
+
+
         void InitiatePool()
         {
             foreach (EnemyPoolData data in poolData.List)
             {
                 var enemyList = new Queue<GameObject>();
                 var healthScriptList = new List<HealthController>();
+                var enemiesController = new List<EnemyController>();
                 var objParent = new GameObject(data.MonsterName);
                 objParent.transform.parent = this.transform;
 
@@ -124,24 +155,59 @@ namespace SpawnerSystem
                     var enemy = Instantiate(data.Prefab, objParent.transform);
                     enemy.SetActive(false);
                     var controller = enemy.GetComponentInChildren<EnemyController>();
+                    enemiesController.Add(controller);
                     enemy.name = enemy.name.Replace("(Clone)", "").Trim();
-                    controller.OnEnemyDeath
+                    
+
+                    if (data.Type == EnemyType.Normal || data.Type == EnemyType.Elite)
+                    {
+                        controller.OnEnemyDeath
+                            .Subscribe(_ =>
+                            {
+                                objectiveManager.currentKilledMonster.Value = objectiveManager.currentKilledMonster.Value + 1;
+                            }).AddTo(enemy);
+
+                        controller.OnEnemyDeath
                         .Subscribe(_ =>
                         {
                             enemies[data.MonsterName].currentActiveMonster--;
                             controller.SpawnXpGem(DequeueXpGem(controller.Xp));
                             ReturnEnemy(enemy);
-                        });
+                        }).AddTo(enemy);
+                    }
+                    if(data.Type == EnemyType.Boss)
+                    {
+                        controller.OnEnemyDeath
+                            .Subscribe(_=>
+                            {
+                                objectiveManager.currentKilledBoss.Value = objectiveManager.currentKilledBoss.Value + 1;
+                                controller.SpawnXpGem(DequeueXpGem(controller.Xp,true));
+                                ReturnEnemy(enemy,true);
+                            }).AddTo(enemy);
+                    }
                     healthScriptList.Add(enemy.GetComponentInChildren<HealthController>());
                     enemyList.Enqueue(enemy);
                 }
 
-                enemies.Add(data.MonsterName, new PoolActiveData(
-                    0, 
+                if (data.Type == EnemyType.Boss)
+                {
+                    enemies.Add("boss", new PoolActiveData(
+                    0,
                     enemyList,
                     data,
-                    healthScriptList));
-                requiredExpGemAmount += data.MaxActiveUnit;
+                    healthScriptList,
+                    enemiesController));
+                }
+                else
+                {
+                    enemies.Add(data.MonsterName, new PoolActiveData(
+                        0,
+                        enemyList,
+                        data,
+                        healthScriptList,
+                        enemiesController));
+                }
+                    requiredExpGemAmount += data.MaxActiveUnit;
             }
             GenerateXpGem(requiredExpGemAmount, gemPoolParent.transform);
 
@@ -178,13 +244,15 @@ namespace SpawnerSystem
         public int currentActiveMonster;
         public Queue<GameObject> enemiesList;
         public List<HealthController> healthScriptList;
+        public List<EnemyController> enemies;
         
-        public PoolActiveData(int currentActiveMonster, Queue<GameObject> queue, EnemyPoolData data, List<HealthController> healthList)
+        public PoolActiveData(int currentActiveMonster, Queue<GameObject> queue, EnemyPoolData data, List<HealthController> healthList, List<EnemyController> enemies)
         {
             this.currentActiveMonster = currentActiveMonster;
             enemiesList = queue;
             this.data = data;
             healthScriptList = healthList;
+            this.enemies = enemies;
         }
     }
     

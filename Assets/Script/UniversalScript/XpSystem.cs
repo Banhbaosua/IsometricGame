@@ -4,6 +4,7 @@ using UnityEngine;
 using UniRx;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Rendering.VirtualTexturing;
 
 public class XpSystem : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class XpSystem : MonoBehaviour
     private ReactiveProperty<int> level;
     private Subject<Unit> onLevelUp;
     private float previousXpValue = 0f;
+    private CardRollingSystem cardRollingSystem;
     public IObservable<Unit> OnLevelUP => onLevelUp;
 
     float GetExpForLevel(int level)
@@ -24,23 +26,23 @@ public class XpSystem : MonoBehaviour
     }
     private void Awake()
     {
-        xp.RPValue.Value = 0;
+        xp.rp.Value = 0;
         level = new ReactiveProperty<int>(0);
         onLevelUp = new Subject<Unit>();
+        cardRollingSystem = FindObjectOfType<CardRollingSystem>();
     }
 
     void Start()
     {
-        xp.RPValue.Subscribe(x =>
+        xp.rp.Subscribe(x =>
         {
-            XpToSliderValue(x);
-            previousXpValue = x;
+            SliderUpdate(x);
         });
 
-        xp.RPValue.Where(x => x >= GetExpForLevel(level.Value + 1)) //.Select(x => x -= GetExpForLevel(level.Value))
-            .Subscribe(x =>
+        xp.rp.Where(x => x >= GetExpForLevel(level.Value + 1))
+            .Subscribe(async _ =>
             {
-                LevelUp();
+                await StartCoroutine(LevelUp());
             });
 
         level.Subscribe(_ =>
@@ -50,20 +52,29 @@ public class XpSystem : MonoBehaviour
             });
     }
 
+    void SliderUpdate(float exp)
+    {
+        XpToSliderValue(exp);
+        previousXpValue = exp;
+    }
+
     void XpToSliderValue(float exp)
     {
         var maxXp = GetExpForLevel(level.Value+1);
-        var percent = (exp-previousXpValue)/ maxXp;
+        var percent = exp/ maxXp;
 
-        xpSlider.value += percent;
+        xpSlider.value = percent;
     }
 
-    void LevelUp()
+    IEnumerator LevelUp()
     {
         level.Value++;
         onLevelUp.OnNext(Unit.Default);
+        yield return new WaitUntil(() => cardRollingSystem.DoneChoosing == true);
+        xp.rp.Value = xp.rp.Value - GetExpForLevel(level.Value);
+        SliderUpdate(xp.rp.Value);
     }
-    
-    
-    
+
+
+
 }

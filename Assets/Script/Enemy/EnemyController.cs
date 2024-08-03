@@ -16,6 +16,13 @@ public enum EnemyState
     death,
 }
 
+public enum EnemyType
+{
+    normal,
+    elite,
+    boss,
+}
+
 public class Enemy
 {
     public StateEvent OnUpdate;
@@ -38,6 +45,8 @@ public class EnemyController : MonoBehaviour, IEffectable
     [SerializeField] float attackCoolDown;
     [SerializeField] Collider attackBox;
     [SerializeField] float attackDamage;
+    [SerializeField] Collider enemyCollider;
+    [SerializeField] Rigidbody body;
 
     [SerializeField] float xp;
     private bool attackAble;
@@ -53,24 +62,25 @@ public class EnemyController : MonoBehaviour, IEffectable
     public IObservable<Unit> OnEnemyDeath => onEnemyDeath;
     public IObservable<Unit> OnEnemySpawn => onEnemySpawn;
     public IObservable<float> OnAttack => onAttack;
-    public float Xp => xp;
+    private float xpMultiplier;
+    public float Xp => xp*(1+xpMultiplier);
+    private CompositeDisposable disposables = new CompositeDisposable();
     private void Awake()
     {
         onEnemyDeath = new Subject<Unit>();
         onEnemySpawn = new Subject<Unit>();
         onAttack = new Subject<float>();
-        OnEnemyDeath.Subscribe(_ => ResetStat());
+        OnEnemyDeath.Subscribe(_ => ResetStat()).AddTo(disposables);
         OnEnemyDeath.Subscribe(_ =>
         {
-            Observable.Timer(TimeSpan.FromSeconds(3))
-            .Subscribe(_ => this.transform.parent.gameObject.SetActive(false));
-        });
+            StartCoroutine(DisableAfterDeath());
+        }).AddTo(disposables);
 
         OnEnemySpawn.Subscribe(_ =>
         {
             SetTarget();
             Initiate();
-        });
+        }).AddTo(disposables);
 
         
         Initiate();
@@ -107,6 +117,7 @@ public class EnemyController : MonoBehaviour, IEffectable
         modifiedSpeed = new ReactiveProperty<float>();
         modifiedSpeed.Subscribe(_ => navMeshAgent.speed = speed);
 
+        enemyCollider.enabled = true;
         attackAble = true;
     }
 
@@ -168,6 +179,7 @@ public class EnemyController : MonoBehaviour, IEffectable
     void death_Enter()
     {
         navMeshAgent.isStopped = true;
+        enemyCollider.enabled = false;
         healthController.OnDeath -= enemyFSM.Driver.OnDeath.Invoke;
         animator.SetFloat("Forward", 0);
         animator.SetTrigger("Death");
@@ -196,15 +208,19 @@ public class EnemyController : MonoBehaviour, IEffectable
 
     IEnumerator EnemyAttackHandle()
     {
-        while (attackAble)
+        while (true)
         {
-            animator.SetTrigger("Attack");
-            animator.SetTrigger("ExecuteAttack");
-            yield return new WaitForSeconds(0.5f);
-            onAttack.OnNext(attackDamage);
-            attackAble = false;
-            currentCooldown = 0;
-            yield return new WaitForSeconds(attackCoolDown);
+            if (attackAble)
+            {
+                attackAble = false;
+                animator.SetTrigger("Attack");
+                animator.SetTrigger("ExecuteAttack");
+                yield return new WaitForSeconds(0.5f);
+                onAttack.OnNext(attackDamage);
+                currentCooldown = 0;
+                yield return new WaitForSeconds(attackCoolDown);
+            }
+            yield return new WaitForFixedUpdate();
         }
     }
 
@@ -243,6 +259,11 @@ public class EnemyController : MonoBehaviour, IEffectable
         target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
+    public void SetXpMultiplier(float value)
+    {
+        xpMultiplier += value;
+    }
+
     public void Spawned()
     {
         onEnemySpawn.OnNext(Unit.Default);
@@ -272,5 +293,26 @@ public class EnemyController : MonoBehaviour, IEffectable
             enemyFSM.ChangeState(EnemyState.chase);
             navMeshAgent.isStopped = false;
         }
+    }
+
+    public void EnableNavMesh()
+    {
+        navMeshAgent.enabled = true;
+    }
+
+    public void DisableNavMesh()
+    {
+        navMeshAgent.enabled = false;
+    }
+
+    public IEnumerator DisableAfterDeath()
+    {
+        yield return new WaitForSeconds(3);
+        this.transform.parent.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        disposables?.Clear();
     }
 }

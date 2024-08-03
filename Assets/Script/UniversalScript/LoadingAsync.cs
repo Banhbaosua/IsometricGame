@@ -8,7 +8,6 @@ public class LoadingAsync : MonoBehaviour
 {
     [SerializeField] GameObject loadingScreen;
     [SerializeField] Slider slider;
-    [SerializeField] CurrentMapLevelInfo currentMapLevelInfo;
     [SerializeField] GameObject menu;
 
     public void LoadScene(object scene)
@@ -17,11 +16,18 @@ public class LoadingAsync : MonoBehaviour
         StartCoroutine(LoadSceneAsync(split[0]));
     }
 
-    IEnumerator LoadSceneAsync(object scene)
+    public void LoadScene(string sceneName)
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(scene.ToString());
+        StartCoroutine(LoadSceneAsync(sceneName));
+    }
 
-        menu.gameObject.SetActive(false);
+    IEnumerator LoadSceneAsync(string sceneName)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+
+        if(menu != null)
+            menu.SetActive(false);
+        
         loadingScreen.SetActive(true);
 
         while(!operation.isDone) 

@@ -16,6 +16,7 @@ public abstract class Skill : MonoBehaviour
     private float castFreq;
     private float timer;
     private bool inCooldown;
+    protected Animator animator;
     protected Transform player;
 
     public SkillData SkillData => skillData;
@@ -25,7 +26,7 @@ public abstract class Skill : MonoBehaviour
 
     public float SkillCoolDown 
     { 
-        get => coolDown * (1 + castFreq);
+        get => coolDown * (1 + CastFreq);
         set
         { 
             coolDown.MultiplyValue(1/value);
@@ -33,8 +34,8 @@ public abstract class Skill : MonoBehaviour
                 coolDown = 0.2f;
         } 
     }
-    public float Damage { get => damage; set => damage.MultiplyValue(value); }
-    public float CastFreq {  get => castFreq + characterData.CastFrequencyModifier; set => castFreq.AddFloatValue(value); }
+    public float Damage { get => damage + characterData.DamageModifier; set => damage.MultiplyValue(value); }
+    public float CastFreq {  get => castFreq/100 + characterData.CastFrequencyModifier/100; set => castFreq.AddFloatValue(value); }
 
     public GameObject InstantiateSkill(Transform parent)
     {
@@ -56,7 +57,7 @@ public abstract class Skill : MonoBehaviour
         if(inCooldown)
         {
             timer -= Time.deltaTime;
-            if(timer < 0)
+            if(timer < 0.01f)
                 inCooldown = false;
         }
     }
@@ -76,6 +77,7 @@ public abstract class Skill : MonoBehaviour
         SkillCoolDown = coolDown/(1+(float)characterData.CastFrequencyModifier);
         Damage = (float)characterData.DamageModifier;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        animator = player.GetComponent<Animator>();
     }
     protected virtual void DealDamage(HealthController healthCtl)
     {

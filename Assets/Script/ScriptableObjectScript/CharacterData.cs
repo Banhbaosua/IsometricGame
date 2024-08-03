@@ -14,7 +14,7 @@ public class CharacterData : ScriptableObject
     public UnityEvent<float> onAreaModChange;
     #endregion
     private string _initialJson = string.Empty;
-    private HealthController _healthController;
+    [SerializeField] private HealthController _healthController;
     public HealthController HealthController => _healthController;
 
     [SerializeField] Stat damageModifier = new Stat(0, StatType.DamageModifier);
@@ -78,11 +78,17 @@ public class CharacterData : ScriptableObject
             {
                 return;
             }
+            _healthController.HealthMultiModify(value);
             maxHealth.AddAddictiveStats(value,this);
             onHealthChange?.Invoke(value);
         }
     }
 
+    public void InjectHealthCtl(HealthController healthController)
+    {
+        _healthController = healthController;
+        _healthController.SetMaxHealth(MaxHealth);
+    }
     public void ResetHealth()
     {
         maxHealth.RemoveAllAddictiveStats(this);
@@ -113,8 +119,6 @@ public class CharacterData : ScriptableObject
             { StatType.RerollChances,rerollChances },
             { StatType.BanishChances, banishChances }
         };
-
-        _healthController = new HealthController(MaxHealth);
     }
     private void OnDisable()
     {

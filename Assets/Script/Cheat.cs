@@ -12,7 +12,15 @@ public class Cheat : MonoBehaviour
     {
         foreach(KeyValuePair<string, Currency> item in currencyInventory.dictFromList)
         {
-            item.Value.AddValue(9999);
+            item.Value.AddValue(999999);
+        }
+    }
+
+    public void MaxMat()
+    {
+        foreach(KeyValuePair<string, CraftingMaterial> item in materialsInventory.dictFromList)
+        {
+            item.Value.AddValue(999999);
         }
     }
 }

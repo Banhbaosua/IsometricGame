@@ -8,6 +8,6 @@ public class XpComponent : MonoBehaviour
 
     public void IncreaseXP(float value)
     {
-        xp.RPValue.Value += value;
+        xp.rp.Value += value;
     }
 }

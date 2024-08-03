@@ -6,19 +6,22 @@ using UnityEngine.SceneManagement;
 [CreateAssetMenu(fileName = "MapLevelInfo", menuName = "MapLevelInfo")]
 public class CurrentMapLevelInfo : ScriptableObject
 {
-    [SerializeField] Object selectedScene;
+    [SerializeField] string selectedScene;
     [SerializeField] SpawnerData levelSetting;
-
-    public Object SelectedScene => selectedScene;
+    private MapTierData mapTierData;
+    public string SelectedScene => selectedScene;
     public SpawnerData LevelSetting => levelSetting;
+    public MapTierData MapTierData => mapTierData;
 
-    public void SelectMap(Object scene)
+    public void SelectMap(string scene)
     {
         selectedScene = scene;
     }
 
-    public void SelectLevel(SpawnerData levelSetting)
+    public void SelectLevel((SpawnerData,MapTierData) data)
     {
-        this.levelSetting = levelSetting;
+        this.levelSetting = data.Item1;
+        this.mapTierData = data.Item2;
+        Debug.Log(MapTierData.Tier);
     }
 }

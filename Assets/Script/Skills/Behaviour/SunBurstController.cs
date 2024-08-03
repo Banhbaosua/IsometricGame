@@ -17,6 +17,7 @@ public class SunBurstController : Skill, IDuration, IArea,ICastOnArea
     private List<Transform> attachedEnemyList;
     private Collider[] enemies = new Collider[0];
     private List<Transform> Entities;
+    private bool spawnable;
     public float Duration { get => duration; set => duration = value; }
     public float AreaModifier 
     { 
@@ -53,28 +54,29 @@ public class SunBurstController : Skill, IDuration, IArea,ICastOnArea
 
     IEnumerator FindEnemy()
     {
-        if (Entities.Count < maxEntity)
+        while (spawnable)
         {
-            while (true)
-            {
-                yield return new WaitForFixedUpdate();
-                if (enemies.Length == 0)
-                    continue;
+            yield return new WaitForFixedUpdate();
+
+            enemies = Physics.OverlapSphere(player.position, castArea.radius, LayerMask.GetMask("Enemy"));
+            if (enemies.Length == 0)
+                continue;
 
 
-                var random = Random.Range(0, enemies.Length - 1);
+            var random = Random.Range(0, enemies.Length - 1);
 
-                if (attachedEnemyList.Contains(enemies[random].transform))
-                    continue;
+            if (attachedEnemyList.Contains(enemies[random].transform))
+                continue;
 
-                attachedEnemy = enemies[random].transform;
-                attachedEnemyList.Add(enemies[random].transform);
+            attachedEnemy = enemies[random].transform;
+            attachedEnemyList.Add(enemies[random].transform);
 
-                var gameObj = Instantiate(maker.gameObject, this.transform);
-                gameObj.SetActive(true);
-                Entities.Add(gameObj.transform);
-                break;
-            }
+
+            var gameObj = Instantiate(maker.gameObject, this.transform);
+            gameObj.SetActive(true);
+            Entities.Add(gameObj.transform);
+
+            break;
         }
     }
 
@@ -98,10 +100,13 @@ public class SunBurstController : Skill, IDuration, IArea,ICastOnArea
         this.transform.position = player.position;
         if (attachedEnemy != null)
             this.transform.position = attachedEnemy.position;
-    }
-    private void FixedUpdate()
-    {
-        enemies = Physics.OverlapSphere(player.position, castArea.radius, LayerMask.GetMask("Enemy"));
+
+        if (Entities.Count < maxEntity)
+        {
+            spawnable = true;
+        }
+        else
+            spawnable = false;
     }
 
     private void OnTriggerEnter(Collider other)

@@ -6,7 +6,6 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class WinBladeController : Skill, ICastOnPlayer
 {
@@ -36,7 +35,6 @@ public class WinBladeController : Skill, ICastOnPlayer
                                     .Select(x => windBlade)
                                     .Subscribe(x => x.transform.Translate(moveSpeed * Time.deltaTime * Vector3.forward)).AddTo(windBlade);
         windBlade.GetComponent<SphereCollider>().OnTriggerEnterAsObservable()
-            .FirstOrDefault()
             .Subscribe(x =>
             {
                 windBladeMove.Dispose();
@@ -124,32 +122,25 @@ public class WinBladeController : Skill, ICastOnPlayer
 
                 });
 
-            //var hitCheck = obj.GetComponent<Collider>().OnTriggerEnterAsObservable()
-            //    .Where(_ => currentIndex < chainCount)
-            //    .Where(hitEnemy => hitEnemy.gameObject == enemy[currentIndex].gameObject)
-            //    .Select(_ => obj)
-            //    .Subscribe(_ =>
-            //    {
-            //        if (currentIndex < chainCount)
-            //        {
-            //            currentIndex++;
-            //            if (currentIndex == chainCount)
-            //                Destroy(obj.gameObject);
-            //        }
-            //    });
             var hitcheck = moveStream
                 .Where(_ => currentIndex < chainCount)
                 .Select(_ => windBlade)
-                .Where(windBlade => Vector3.SqrMagnitude(windBlade.transform.position - enemy[currentIndex].transform.position) < 1f)
                 .Subscribe(windBlade =>
                 {
-                    DealDamage(enemy[currentIndex].GetComponent<HealthController>());
-                    if (currentIndex < chainCount)
+                    try
                     {
-                        currentIndex++;
-                        if (currentIndex == chainCount)
-                            Destroy(windBlade.gameObject);
+                        if (Vector3.SqrMagnitude(windBlade.transform.position - enemy[currentIndex].transform.position) < 1f)
+                        {
+                            DealDamage(enemy[currentIndex].GetComponent<HealthController>());
+                            if (currentIndex < chainCount)
+                            {
+                                currentIndex++;
+                                if (currentIndex == chainCount)
+                                    Destroy(windBlade.gameObject);
+                            }
+                        }
                     }
+                    catch (Exception e) { }
                 });
 
             windBlade.OnDestroyAsObservable().Subscribe(_ =>

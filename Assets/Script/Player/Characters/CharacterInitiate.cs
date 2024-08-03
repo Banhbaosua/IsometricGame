@@ -8,27 +8,22 @@ public class CharacterInitiate : MonoBehaviour
     [SerializeField] Transform spawnLocation;
     [SerializeField] CameraFollow cameraFollow;
     [SerializeField] GameEvent onCharacterSpawn;
+    [SerializeField] CharacterData characterData;
+    private GameObject player;
+    public GameObject Player => player;
     // Start is called before the first frame update
     private void Awake()
     {
         SpawnCharacter();
     }
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void SpawnCharacter()
     {
-        var character = Instantiate(currentClassData.GetCharacterClassData().Prefab);
-        character.transform.position = spawnLocation.position;
-        cameraFollow.SetFollowPlayer(character.transform);
-        onCharacterSpawn.Notify(this,character);
+        player = Instantiate(currentClassData.GetCharacterClassData().Prefab);
+        
+        player.GetComponent<PlayerController>().SetWeapon(currentClassData.GetWeapon().Tier);
+        player.transform.position = spawnLocation.position;
+        cameraFollow.SetFollowPlayer(player.transform);
+        onCharacterSpawn.Notify(this,player);
     }
 }

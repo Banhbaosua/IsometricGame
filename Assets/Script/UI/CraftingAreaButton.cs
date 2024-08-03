@@ -13,6 +13,7 @@ public class CraftingAreaButton : MonoBehaviour, IPointerClickHandler
     [SerializeField] private MaterialsInventory _matInventory;
 
     [SerializeField] private Image _weaponImage;
+    [SerializeField] private Text _weaponName;
     [SerializeField] private List<Image> _material;
 
     [SerializeField] private List<Text> _materialReqText;
@@ -32,6 +33,7 @@ public class CraftingAreaButton : MonoBehaviour, IPointerClickHandler
         var classWeaponList = _currentClassData.GetCharacterClassData();
         weapon = classWeaponList.weapons[_tier - 1];
         _weaponImage.sprite = weapon.WeapImg;
+        _weaponName.text = weapon.Name;
 
         var reqList = weapon.UnlockRequirement;
         for (int i = 0; i < reqList.Count; i++) 

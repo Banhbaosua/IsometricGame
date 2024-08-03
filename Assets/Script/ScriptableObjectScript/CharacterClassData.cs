@@ -45,14 +45,12 @@ public class CharacterClassData : ScriptableObject
 
     public void ApplyBonus()
     {
-        Debug.Log("apply bonus");
         if(bonusStat != null)
         foreach (var stat in bonusStat) 
         {
             if (_characterData.StatList.ContainsKey(stat.Type))
             {
-                _characterData.StatList[stat.Type].AddAddictiveStats(stat.Value, _characterData);
-                    
+                _characterData.StatList[stat.Type].AddAddictiveStats(stat.Value, _characterData);  
             }
         }
         isSelected = true;
@@ -60,7 +58,6 @@ public class CharacterClassData : ScriptableObject
 
     public void RemoveBonus()
     {
-        Debug.Log("remove bonus");
         foreach(var stat in bonusStat) 
         { 
             if(_characterData.StatList.ContainsKey(stat.Type))

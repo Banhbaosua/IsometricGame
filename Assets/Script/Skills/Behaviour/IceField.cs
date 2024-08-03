@@ -23,7 +23,6 @@ public class IceField : Skill, ICastOnArea
     {
         if (currentEntity < entities)
         {
-            Debug.Log(currentEntity);
             var enemies = Physics.OverlapSphere(player.position, castArea.radius, LayerMask.GetMask("Enemy"));
             if (enemies.Length > 0)
             {
@@ -38,7 +37,6 @@ public class IceField : Skill, ICastOnArea
                 var iceFieldDuration = Observable.Timer(TimeSpan.FromSeconds(existInterval))
                     .Subscribe(_ =>
                     {
-                        Debug.Log("destroy");
                         currentEntity--;
                         Destroy(iceField);
                     });

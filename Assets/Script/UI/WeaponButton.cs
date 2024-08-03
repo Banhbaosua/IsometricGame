@@ -35,7 +35,7 @@ public class WeaponButton : MonoBehaviour, IPointerClickHandler
             return;
         var data = Data as CharacterClassData;
         weaponData = data.weapons[tier-1];
-
+        ButtonUIUpdate(weaponData);
         SaveDefaultWeapon();
     }
 
@@ -55,8 +55,14 @@ public class WeaponButton : MonoBehaviour, IPointerClickHandler
         Debug.Log("initiate weapon");
         weaponData = characterData.GetCharacterClassData().weapons[tier-1];
         SetWeaponImg(this, characterData.GetCharacterClassData());
-        lockedFIlter.gameObject.SetActive(!weaponData.isUnlocked);
+        ButtonUIUpdate(weaponData);
         SaveDefaultWeapon();
+    }
+
+    public void ButtonUIUpdate(BaseWeapon weaponData)
+    {
+        lockedFIlter.gameObject.SetActive(!weaponData.isUnlocked);
+        _weaponImage.raycastTarget = weaponData.isUnlocked;
     }
 
     private void SaveDefaultWeapon()

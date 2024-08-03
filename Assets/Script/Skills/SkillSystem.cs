@@ -16,21 +16,23 @@ public class SkillSystem : MonoBehaviour
     IObservable<int> indexCombinedStream;
     IObservable<Skill> skillCombinedStream;
     public IObservable<(int, Skill)> indexSkillStream;
+    public bool IsFull => skillInventory.IsFull;
 
     private void Awake()
     {
         chosenSkill = new List<Skill>();
-        skillInventory.SetSkillHolder(this.transform);
-        skillInventory.GenerateSlotsInfo(slots, cards);
         indexCombinedStream = Observable.Empty<int>();
         skillCombinedStream = Observable.Empty<Skill>();
-        slots[0].Set(currentClassData.GetWeapon().BaseSkill.Prefab.GetComponent<Skill>());
-        chosenSkill.Add(currentClassData.GetWeapon().BaseSkill.Prefab.GetComponent<Skill>());
     }
 
     private void Start()
     {
-        for(int i = 0; i < slots.Count; i++) 
+        skillInventory.SetSkillHolder(this.transform);
+        skillInventory.GenerateSlotsInfo(slots, cards);
+        slots[0].Set(currentClassData.GetWeapon().BaseSkill.Prefab.GetComponent<Skill>());
+        chosenSkill.Add(currentClassData.GetWeapon().BaseSkill.Prefab.GetComponent<Skill>());
+
+        for (int i = 0; i < slots.Count; i++) 
         {
             slots[i].Initiate();
             indexCombinedStream = indexCombinedStream.Merge(slots[i].SlotIndexChosen);
@@ -48,10 +50,20 @@ public class SkillSystem : MonoBehaviour
                  Add(x);
              });
 
-        indexSkillStream = indexCombinedStream
-            .Zip(skillCombinedStream, (index, skill) => (index,skill))
-            .Take(1);
+        skillCombinedStream.Where(_ => skillInventory.IsFull)
+            .Subscribe(_ =>
+            {
+                foreach(var item in slots)
+                {
+                    item.EnableButton();
+                }
+            });
 
+        indexSkillStream = indexCombinedStream
+            .Where(_ => skillInventory.IsFull)
+            .Zip(skillCombinedStream, (index, skill) => (index, skill))
+            .Scan((previous, current) => (current.index, current.skill));
+        
         indexSkillStream.Subscribe(x => Replace(x.Item1,x.Item2));
     }
 
@@ -63,7 +75,7 @@ public class SkillSystem : MonoBehaviour
             {
                 slots[i].Set(skill);
                 chosenSkill.Add(skill);
-                if (i == 5)
+                if (chosenSkill.Count == slots.Count)
                     skillInventory.Full();
                 break;
             }

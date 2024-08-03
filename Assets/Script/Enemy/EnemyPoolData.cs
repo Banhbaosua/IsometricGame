@@ -41,6 +41,13 @@ namespace SpawnerSystem
                     activeData.healthScriptList[i].HealthMultiModify(wave.HealthModify);
                 }
             }
+            if(wave.ExpMultiplier>0)
+            {
+                for(int i = 0; i < activeData.enemiesList.Count;i++) 
+                {
+                    activeData.enemies[i].SetXpMultiplier(wave.ExpMultiplier);
+                }
+            }
             currentWave++;
         }
         public static IEnumerator WavesTrigger(PoolActiveData activeData)
@@ -60,7 +67,6 @@ namespace SpawnerSystem
                 {
                     var wave = data.Waves[data.CurrentWave];
                     data.StartWave(wave, activeData);
-                    Debug.Log(data.MaxActiveUnit);
                 }
             }
         }
@@ -72,9 +78,11 @@ namespace SpawnerSystem
         [SerializeField] float triggerTime;
         [SerializeField] int addictiveEnemy;
         [SerializeField] float healthModify;
+        [SerializeField] float expMultiplier;
 
         public int AddictiveEnemy => addictiveEnemy;
         public float TriggerTime => triggerTime;
         public float HealthModify => healthModify;
+        public float ExpMultiplier => expMultiplier;
     }
 }

@@ -41,8 +41,4 @@ public class DimensionCutter : Skill, IArea, IFollowCursor, ICastOnPlayer
     {
         base.Start();
     }
-    private void Update()
-    {
-
-    }
 }

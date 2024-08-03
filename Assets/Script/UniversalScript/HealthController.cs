@@ -30,7 +30,7 @@ public class HealthController : MonoBehaviour
     {
         if (currentHealth > 0) 
         {
-            currentHealth -= damage;
+            currentHealth = Mathf.Max(0,currentHealth-damage);
             if(currentHealth <= 0) 
             {
                 OnDeath(true);
@@ -41,6 +41,11 @@ public class HealthController : MonoBehaviour
     public void HealthMultiModify(float value)
     {
         modifiedHealth += value;
+    }
+
+    public void SetMaxHealth(float value)
+    {
+        maxHealth = value;
     }
 
     public void ResetHealth()

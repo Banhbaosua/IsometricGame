@@ -12,11 +12,13 @@ public class SkillTreePassiveSO : ScriptableObject
     [SerializeField] CharacterData characterData;
     [SerializeField] Sprite icon;
     [SerializeField] int baseTier;
+    [SerializeField] bool firstPassive;
     [TextArea]
     [SerializeField] string description;
 
     [SerializeField,HideInInspector] private int currentTier = default;
     public int CurrentTier => currentTier;
+    public bool FirstPassive => firstPassive;
     public SkillTreePassiveData NextTierData    =>  passives[currentTier];
 
     public Sprite Icon => icon;
@@ -27,7 +29,7 @@ public class SkillTreePassiveSO : ScriptableObject
             if (currentTier == 0)
                 return description;
             else
-                return description + passives[currentTier-1].Value.ToString();
+                return description +" "+ passives[currentTier-1].Value.ToString();
         } 
     }
 
@@ -57,6 +59,12 @@ public class SkillTreePassiveSO : ScriptableObject
         }
         if (currentTier > 0)
             ApplyPassive();
+    }
+
+    public void ResetTier()
+    {
+        currentTier = 0;
+        Debug.Log(currentTier);
     }
 }
 

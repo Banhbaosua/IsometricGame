@@ -21,6 +21,7 @@ public class SkillInventory : ScriptableObject
     public void GenerateSlotsInfo(List<SkillSlot> slots, List<SkillCard> cards)
     {
         skillSlots = slots;
+        isFull = false;
         foreach(SkillSlot slot in skillSlots) 
         { 
             slot.GenerateCardList(cards);

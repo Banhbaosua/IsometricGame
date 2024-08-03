@@ -7,7 +7,9 @@ using SpawnerSystem;
 public class SpawnerData : ScriptableObject
 {
     [SerializeField] List<EnemyPoolData> list;
+    [SerializeField] List<Objectives> objives;
     public List<EnemyPoolData> List => list;
+    public List<Objectives> Objives => objives;
 }
 
 

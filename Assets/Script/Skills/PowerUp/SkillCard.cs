@@ -16,6 +16,8 @@ public class SkillCard : MonoBehaviour
     [SerializeField] Image cardFrame;
     [SerializeField] Image skillRarityFrame;
     [SerializeField] Text description;
+    [SerializeField] Text skillName;
+    [SerializeField] SkillInventory skillInventory;
     [TextAreaAttribute]
     public string Description;
     private Dictionary<Rarity, SkillCardFrameWrapper> rarityToFrame;
@@ -25,18 +27,24 @@ public class SkillCard : MonoBehaviour
     public IObservable<Skill> OnSkillChosen=> onSkillChosen;
     public Skill Skill => skill;
 
-    public void Choose(PowerUps pu = null, Skill skill = null)
+    public void Choose(PowerUps pu = null, Skill skill = null, bool isFull = false)
     {
         if (pu != null)
         {
             pu.Apply(characterData);
+            DisableSkillCard();
+
         }
         else
         {
-            onSkillChosen.OnNext(skill);
+            if (!isFull)
+            {
+                onSkillChosen.OnNext(skill);
+                DisableSkillCard();
+            }
+            else
+                onSkillChosen.OnNext(skill);
         }
-        transform.parent.gameObject.SetActive(false);
-        Time.timeScale = 1f;
     }
 
     public void Set(PowerUps pu = null, Skill skill = null)
@@ -49,6 +57,7 @@ public class SkillCard : MonoBehaviour
             skillRarityFrame.enabled = true;
             skillRarityFrame.sprite = rarityToFrame[pu.Rarity].SkillFrame;
             description.text = pu.GetDescription();
+            skillName.text = pu.name;
         }
         if(skill != null)
         {
@@ -56,13 +65,20 @@ public class SkillCard : MonoBehaviour
             this.skill = skill;
             cardIcon.sprite = skill.SkillData.Icon;
             description.text = skill.Description;
+            skillName.text = skill.SkillData.name;
         }
+    }
+
+    public void DisableSkillCard()
+    {
+        transform.parent.gameObject.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void Initiate()
     {
         onSkillChosen = new Subject<Skill>();
-        button.OnClickAsObservable().Subscribe(_ => Choose(powerUp, skill));
+        button.OnClickAsObservable().Subscribe(_ => Choose(powerUp, skill,skillInventory.IsFull));
         rarityToFrame = frameWrappers.ToDictionary(x => x.Rarity, x => x);
     }
 

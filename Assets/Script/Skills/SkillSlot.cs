@@ -2,8 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UniRx;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -19,19 +17,20 @@ public class SkillSlot : MonoBehaviour
     private Skill currentSkill;
     private Transform skillGO;
     private Subject<int> slotIndexChosen;
-    private float timer;
     public IObservable<int> SlotIndexChosen => slotIndexChosen;
     public Skill CurrentSkill => currentSkill;
     public List<SkillCard> SkillCards => skillCards;
+
     private void Awake()
     {
+        DisableButton();
     }
 
     private void Update()
     {
         if(currentSkill != null) 
         {
-            coolDownImg.fillAmount = currentSkill.Timer;
+            coolDownImg.fillAmount = (currentSkill.SkillCoolDown-currentSkill.Timer)/currentSkill.SkillCoolDown;
         }
     }
     public void Set(Skill skill)
@@ -55,6 +54,23 @@ public class SkillSlot : MonoBehaviour
     public void Initiate()
     {
         slotIndexChosen = new Subject<int>();
-        button.OnClickAsObservable().Subscribe(_ => slotIndexChosen.OnNext(slotIndex));
+        button.OnClickAsObservable().Subscribe(_ =>
+        {
+            slotIndexChosen.OnNext(slotIndex);
+            foreach(SkillCard card in skillCards)
+            {
+                card.DisableSkillCard();
+            }
+        });
+    }
+
+    public void EnableButton()
+    {
+        button.interactable = true;
+    }
+
+    public void DisableButton()
+    {
+        button.interactable = false;
     }
 }

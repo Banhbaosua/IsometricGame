@@ -16,7 +16,6 @@ public class Passive : PowerUps
     public void RollRarity()
     {
         float rd = Random.Range(0f, 100f);
-        Debug.Log(rd);
         int index;
         for(index = 0; index< list.Count;++index)
         {

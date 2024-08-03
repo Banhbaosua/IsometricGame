@@ -42,7 +42,6 @@ public class PulseShot : Skill, ICastOnPlayer
                 pulseExplodeGO.SetActive(true);
 
                 var enemies = Physics.OverlapSphere(x.transform.position,explodeRadius.radius, LayerMask.GetMask("Enemy"));
-                Debug.Log(enemies.Length);
                 foreach(var enemy in enemies)
                 {
                     DealDamage(enemy.transform.GetComponent<HealthController>());

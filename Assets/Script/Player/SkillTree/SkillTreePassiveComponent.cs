@@ -4,7 +4,7 @@ using UnityEngine;
 using UniRx;
 using UnityEngine.UI;
 using UniRx.Triggers;
-using System;
+using UnityEditor;
 
 public class SkillTreePassiveComponent : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class SkillTreePassiveComponent : MonoBehaviour
     [SerializeField] GameEvent passiveChooseEvent;
     [SerializeField] Image image;
     [SerializeField] Transform yellowConnectionLine;
+    [SerializeField] SkillTreePassiveComponent[] connectedPassives;
     public SkillTreePassiveSO SkillTreeSO => skillTreeSO;
     private CompositeDisposable disposables = new();
 
@@ -22,11 +23,44 @@ public class SkillTreePassiveComponent : MonoBehaviour
             .Subscribe(_ =>
             {
                 passiveChooseEvent.Notify(this, this);
+                
             })
             .AddTo(disposables);
             
         yellowConnectionLine.gameObject.SetActive(skillTreeSO.CurrentTier != default);
+        CheckAvailability();
 
+    }
+
+    public void CheckAvailability()
+    {
+        UnlockableOff();
+        foreach (var passive in connectedPassives) 
+        {
+            if (skillTreeSO.FirstPassive || passive.SkillTreeSO.CurrentTier > 0)
+            {
+                UnlockableOn();
+                break;
+            }
+        }
+    }
+
+    public void EnableConnectedNode()
+    {
+        foreach (var passive in connectedPassives)
+        {
+            passive.CheckAvailability();
+        }
+    }
+
+    void UnlockableOn()
+    {
+        image.raycastTarget = true;
+    }
+
+    void UnlockableOff()
+    {
+        image.raycastTarget = false;
     }
 
     public void EnableYellowLine()
@@ -36,6 +70,6 @@ public class SkillTreePassiveComponent : MonoBehaviour
 
     private void OnDisable()
     {
-        //disposables?.Dispose();
+        disposables?.Dispose();
     }
 }

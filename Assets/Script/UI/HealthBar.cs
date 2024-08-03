@@ -17,7 +17,7 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        slider.value = characterData.HealthController.CurrentHealth/characterData.HealthController.MaxHealth;
+        slider.value = characterData.HealthController.CurrentHealth/characterData.MaxHealth;
         healthText.text = characterData.HealthController.CurrentHealth.ToString();
     }
 }

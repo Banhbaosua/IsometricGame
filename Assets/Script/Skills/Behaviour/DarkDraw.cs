@@ -27,8 +27,10 @@ public class DarkDraw : Skill, IArea, ICastOnPlayer
 
     protected override void SkillBehavior()
     {
+        animator.SetTrigger("Flurry");
         var skillObj = Instantiate(drawEffect, this.transform);
         skillObj.SetActive(true);
+
 
         Vector3 worldCenter = hitBox.transform.TransformPoint(hitBox.center);
         Vector3 worldHalfExtents = Vector3.Scale(hitBox.size, hitBox.transform.lossyScale) * 0.5f;
@@ -41,7 +43,6 @@ public class DarkDraw : Skill, IArea, ICastOnPlayer
         }
         Destroy(skillObj, .5f);
     }
-
     // Start is called before the first frame update
     protected override void Start()
     {

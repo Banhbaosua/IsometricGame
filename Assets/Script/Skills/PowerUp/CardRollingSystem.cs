@@ -19,6 +19,8 @@ public class CardRollingSystem : MonoBehaviour
     private List<Skill> rolledSkill;
     private List<Skill> ChosenSkill => skillSystem.ChosenSkill;
     private CompositeDisposable disposables;
+    private bool doneChoosing;
+    public bool DoneChoosing => doneChoosing;
 
     void EnableCards(Unit _)
     {
@@ -27,29 +29,33 @@ public class CardRollingSystem : MonoBehaviour
         rolledPU.Clear();
         rolledSkill.Clear();
         RollAllCard();
+        doneChoosing = false;
     }
 
     Skill RollSkill(SkillCard skillCard)
     {
-        int rd = UnityEngine.Random.Range(0, skillTable.List.Count-1);
+        int rd = UnityEngine.Random.Range(0, skillTable.List.Count);
         var skill = skillTable.List[rd];
-        while (rolledSkill.Contains(skill) || ChosenSkill.Contains(skill) && (skillTable.List.Count - ChosenSkill.Count) >= 3)
+
+        while (rolledSkill.Contains(skill) || ChosenSkill.Contains(skill))
         {
-            rd = UnityEngine.Random.Range(0, skillTable.List.Count-1);
+            rd = UnityEngine.Random.Range(0, skillTable.List.Count);
             skill = skillTable.List[rd];
         }
         rolledSkill.Add(skill);
-        
         skillCard.Set(null, skill);
+        skillCard.OnSkillChosen
+            .Take(1)
+            .Subscribe(_ => doneChoosing = true);
         return skill;
     }
 
     void RollPowerUP(SkillCard skillCard) 
     {
-        int rd = UnityEngine.Random.Range(0, puTable.List.Count-1);
+        int rd = UnityEngine.Random.Range(0, puTable.List.Count);
         while (rolledPU.Contains(rd))
         {
-            rd = UnityEngine.Random.Range(0, puTable.List.Count-1);
+            rd = UnityEngine.Random.Range(0, puTable.List.Count);
         }
 
         rolledPU.Add(rd);
@@ -66,15 +72,24 @@ public class CardRollingSystem : MonoBehaviour
         {
 
         }
+
+        skillCard.OnSkillChosen
+            .Take(1)
+            .Subscribe(_ => doneChoosing = true);
     }
     void RollAllCard()
     {
-        int rdSkillorPU = UnityEngine.Random.Range(0, 0);
         foreach (SkillCard card in skillCards)
         {
-            if (rdSkillorPU == 0)
+            if (skillTable.List.Count - (ChosenSkill.Count + rolledSkill.Count) >0)
             {
-                RollSkill(card);
+                int rdSkillorPU = UnityEngine.Random.Range(0, 1);
+                if (rdSkillorPU == 0)
+                {
+                    RollSkill(card);
+                }
+                else
+                    RollPowerUP(card);
             }
             else
                 RollPowerUP(card);
